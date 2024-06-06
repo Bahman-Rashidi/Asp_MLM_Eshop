@@ -1,0 +1,96 @@
+﻿@model IEnumerable<MLM_app.Models.Comment>
+
+@{
+    ViewBag.Title = "list of comments";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<h2 class="title text-center">list of comments</h2>
+
+<section id="cart_items">
+    <div class="container">
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr class="cart_menu text-center">
+                        <td>
+                            @Html.DisplayNameFor(model => model.Products.ProductTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.CommentDate)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.CommentIsActive)
+                        </td>
+                        <td>Operation</td>
+                    </tr>
+                    @{
+                        var db = new MLM_app.Models.ApplicationDbContext();
+                    }
+                    @*foreach (var item in db.Comments.Where(x => x.ParentId != null).Select(x => x.ParentId).ToList())*@
+                </thead>
+                <tbody class="text-center">
+                    @foreach (var item in Model)
+                    {
+                        if (item.ParentId == null)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Products.ProductTitle)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CommentDate)
+                                </td>
+                                <td>
+                                    @if (item.CommentIsActive == true)
+                                    {
+                                        @:confirm
+                                    }
+                                    else
+                                    {
+                                        @:Expectation
+                                    }
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Response", "Create", new { id = item.CommentId }) |
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.CommentId }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.CommentId }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.CommentId })
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr style="background-color: burlywood;">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Products.ProductTitle)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CommentDate)
+                                </td>
+                                <td>
+                                    @if (item.CommentIsActive == true)
+                                    {
+                                        @:confirm
+                                    }
+                                    else
+                                    {
+                                        @:Expectation
+                                    }
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Response", "Create", new { id = item.CommentId }) |
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.CommentId }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.CommentId }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.CommentId })
+                                </td>
+                            </tr>
+                        }
+
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

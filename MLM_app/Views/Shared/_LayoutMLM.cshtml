@@ -1,0 +1,290 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    @Styles.Render("~/content/css")
+    @*@Styles.Render("~/Content/cssLTR")*@
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+
+    @Scripts.Render("~/bundles/jquery")
+    @*@Scripts.Render("~/bundles/bootstrapNew")*@
+    <!--<script src="~/Scripts/jquery-ui-1.13.2.min.js"></script>-->
+    <script src="~/Scripts/bootstrap.js"></script>
+
+    <script src="~/Scripts/jquery.scrollUp.js"></script>
+    <script src="~/Scripts/price-range.js"></script>
+
+    <script src="~/Scripts/jquery.prettyPhoto.js"></script>
+
+    <script src="~/Scripts/main.js"></script>
+    <script src="~/Scripts/eshoper.js"></script>
+    <script src="~/Scripts/respond.js"></script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+
+            //ConvertNumberToPersion();
+            //Display the number of items in the shopping cart every time the page is refreshed
+            $.ajax({
+                url: "/api/ShoppingCartApi",
+                data: {},
+                type: "GET",
+            }).done(function (result) {
+                if (result) {
+                    $("#cartinfo").fadeOut(200).html("number of items: " + "<span class='badge'>" + result + "</span>").fadeIn(500);
+                }
+            });
+
+            $("[id*=btnAddToBasket]").each(function () {
+                $(this).click(function () {
+                    var productid = $(this).attr("id").match(/[\d]+$/);
+                    $.ajax({
+                        url: "/api/ShoppingCartApi",
+                        data: { ProductID: productid },
+                        type: "GET"
+                    }).done(function (result) {
+                        if (result) {
+                            $("#cartinfo").fadeOut(200).html("number of items: " + "<span class='badge'>" + result + "</span>").fadeIn(200);
+                        } else {
+                        }
+                    });
+
+                });
+            });
+
+            $("form").addClass("form-horizontal").attr("role", "form");
+            $("#buttons * *").addClass("btn btn-primary");
+            $('input[type="text"],input[type="datetime"],input[type="email"],input[type="number"],input[type="password"],textarea,select').addClass("form-control");
+        });
+
+        //function ConvertNumberToPersion() {
+        //    persian = { 0: '۰', 1: '۱', 2: '۲', 3: '۳', 4: '۴', 5: '۵', 6: '۶', 7: '۷', 8: '۸', 9: '۹' };
+        //    function traverse(el) {
+        //        if (el.nodeType == 3) {
+        //            var list = el.data.match(/[0-9]/g);
+        //            if (list != null && list.length != 0) {
+        //                for (var i = 0; i < list.length; i++)
+        //                    el.data = el.data.replace(list[i], persian[list[i]]);
+        //            }
+        //        }
+        //        for (var i = 0; i < el.childNodes.length; i++) {
+        //            traverse(el.childNodes[i]);
+        //        }
+        //    }
+        //    traverse(document.body);
+        //}
+
+    </script>
+
+    <div style="position:fixed; left:1%; bottom:2%; float:left;z-index: 1000; border:1px #d8d8da solid; background:#FFF; padding:7px; border-radius:10px; font-family:tahoma; font-size:11px;">
+
+        <img id='nbpergvlgwmdrgvldrft' style='cursor:pointer' onclick='window.open("http://trustseal.enamad.ir/Verify.aspx?id=25951&p=wkynyncrjzpgyncrnbpd", "Popup","toolbar=no, location=no, statusbar=no, menubar=no, scrollbars=1, resizable=0, width=580, height=600, top=30")' alt='' src='http://trustseal.enamad.ir/logo.aspx?id=25951&p=qesgfujyzpfvfujylznb' />
+
+    </div>
+
+
+    <header id="header">
+        <!--header-->
+        <div class="header_top">
+            <!--header_top-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+
+                        @Html.Partial("_LoginPartial")
+
+                    </div>
+                    <div class="col-sm-8">
+
+                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                            <div class="container-fluid">
+                                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                                    <div class="navbar-nav">
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <a class="nav-link" href="/UserManage/MyProfile">EditInfo</a>
+                                            <a class="nav-link" href="/Manage/ChangePassword">ChangePass</a>
+                                            <a class="nav-link" href="/UserManage/Orders">MyOrders</a>
+
+                                            <a class="nav-link" href="/ShoppingCart/Orders">factor</a>
+                                            <a class="nav-link" href="/Account/RegisterSubUser">AddUser</a>
+                                            <a class="nav-link" href="/Account/SybUserChart">SubUsers</a>
+                                            <a class="nav-link" href="/kartable/index">Inbox</a>
+
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <div class="social-icons pull-left col-sm-3">
+                            <a href="/ShoppingCart">
+                                <div class="cinfo" id="cartinfo" title="View shopping cart">
+                                    basket: <span class="badge">0</span>
+                                </div>
+                            </a>
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="header-bottom">
+            <!--header-bottom-->
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        @*  <div class="mainmenu pull-right">*@
+                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                            <div class="container-fluid">
+                                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                                    <div class="navbar-nav">
+                                        <ul class="nav navbar-nav  navbar-collapse">
+                                            <li>@Html.ActionLink("Home", "Index", "Home", null, new { @class = "active" })</li>
+
+
+                                            <li class="dropdown">
+                                                <a class="nav-link" href="#">News<i class="fa fa-angle-down"></i></a>
+                                                <ul role="menu" class="sub-menu">
+                                                    @Html.Partial("_PageGroupList")
+                                                </ul>
+                                            </li>
+                                            @if (User.IsInRole("Administrator"))
+                                            {
+                                                <li class="dropdown">
+                                                    <a class="nav-link" href="#">Managment<i class="fa fa-angle-down"></i></a>
+                                                    <ul role="menu" class="sub-menu">
+                                                        @*<li>@Html.ActionLink("Fee Managment", "Index", "ReciptionMethod", new { @class = "dropdown-item" })</li>*@
+                                                        <li>@Html.ActionLink("Fee Managment", "Index", "ReciptionMethod")</li>
+
+                                                        <li>@Html.ActionLink("categories", "index", "AdminProductGroups")</li>
+                                                        <li>@Html.ActionLink("Insert Stuff Group", "Create", "AdminProductGroups")</li>
+
+                                                        <li>@Html.ActionLink("List of Sttufs", "index", "AdminProducts")</li>
+                                                        <li>@Html.ActionLink("Inset Stuff", "Create", "AdminProducts")</li>
+
+                                                        <li>@Html.ActionLink("News Group", "index", "AdminPageGroups")</li>
+                                                        <li>@Html.ActionLink("Insert News Group", "Create", "AdminPageGroups")</li>
+
+                                                        <li>@Html.ActionLink("News List", "index", "AdminPages")</li>
+                                                        <li>@Html.ActionLink("Insert News", "Create", "AdminPages")</li>
+
+                                                        @*  <li>@Html.ActionLink("Profit calculation", "index", "DispachPeyment")</li>*@
+                                                        <li>@Html.ActionLink(" Fees", "AllOrders", "AdminOrders")</li>
+                                                        <li>@Html.ActionLink("Orders", "index", "AdminOrders")</li>
+
+                                                        <li>@Html.ActionLink("Customer Comments", "index", "AdminComments")</li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dropdown">
+                                                    <a class="nav-link" href="#">Setting<i class="fa fa-angle-down"></i></a>
+                                                    <ul role="menu" class="sub-menu">
+                                                        <li>@Html.ActionLink("Logo", "Logo", "AdminSettings")</li>
+                                                        <li>@Html.ActionLink("Email", "EmailSend", "AdminSettings")</li>
+                                                        <li>@Html.ActionLink("Slider", "Index", "AdminSliders")</li>
+
+                                                        <li>@Html.ActionLink("Comtact us", "index", "AdminContacts")</li>
+                                                        <li>@Html.ActionLink("Edit Screen", "index", "AdminSettings")</li>
+
+                                                        <li>@Html.ActionLink("role", "index", "AdminRoles")</li>
+                                                        <li>@Html.ActionLink("Users", "index", "AdminUsers")</li>
+                                                        <li>@Html.ActionLink("Peridos", "Index", "PeriodOfProfit")</li>
+                                                        <li>@Html.ActionLink("Unvalid Users", "InValidUsersInValidEmail", "UserManage")</li>
+                                                        @*<li>@Html.ActionLink("Users without Sub user password", "InValidUsersNotsubuser", "UserManage")</li>*@
+                                                        <li>@Html.ActionLink("Users without Sub passwords", "InValidUsersNotsubuser", "UserManage")</li>
+
+                                                    </ul>
+                                                </li>
+                                            }
+                                            <li>@Html.ActionLink("Policy", "Conditions", "Home", new { @class = "nav-link" })</li>
+                                            <li>@Html.ActionLink("Complaints", "Complaint", "Home", new { @class = "nav-link" })</li>
+                                            <li>@Html.ActionLink("About Us", "About", "Home", new { @class = "nav-link" })</li>
+                                            <li>@Html.ActionLink("Contact Us", "Contact", "Home", new { @class = "nav-link" })</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>
+    <section>
+        <div class="container">
+            <div class="row">
+                @* <div class="col-md-11 col-md-push-12 col-md-offset-1 padding-right">*@
+                <div class="col-md-12 col-md-push-12 ">
+                    @RenderBody()
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <!--Footer-->
+
+        <div class="footer-widget">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="social-icons pull-left">
+                        <ul class="nav ">
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="container">
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <p class="pull-right">Copyright © 2015 makan ssytem Inc. All rights reserved.</p>
+                    <p class="pull-left">Designed by <span><a target="_blank" href="#">test </a></span></p>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+    <!--/Footer-->
+
+</body>
+</html>
+@RenderSection("scripts", required: false)

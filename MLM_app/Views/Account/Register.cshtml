@@ -1,0 +1,287 @@
+﻿@model MLM_app.Models.RegisterViewModelBayPassw
+@{
+    ViewBag.Title = "Submit Name";
+    @*   Layout = "~/Views/Shared/_LayoutMLM.cshtml";*@
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+
+}
+<div id="Coniner">
+
+    <div class="row">
+        <div id="Right1" class="col-md-2">
+            <div> </div>
+        </div>
+
+        <div id="Right2" class="col-md-2">
+            <div> </div>
+        </div>
+
+        <div id="Model" class="col-md-3">
+            <div> </div>
+        </div>
+
+        <div id="Left1" class="col-md-2">
+            <div> </div>
+        </div>
+
+        <div id="Left2" class="col-md-2">
+            <div> </div>
+        </div>
+
+
+
+    </div>
+
+</div>
+@{
+    Html.RenderPartial("_AlertPartial");
+}
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+
+    <h2 class="title text-center">@ViewBag.Title</h2>
+
+    @Html.AntiForgeryToken()
+    <div class="row">
+
+        <h4>To create a user account, please fill out the form below</h4>
+        <h4>Note that you need to obtain SIN Number and password from your superior user</h4>
+    </div>
+    <h2 class="title text-center blink" id="HeadLine" style="color: red"></h2>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <div class="row mb-3" style="background-color: azure">
+        @Html.LabelFor(m => m.ParentPasswordUser, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.ParentPasswordUser, new { htmlAttributes = new { @placeholder = "The password should be requested from the upper-level user" } })
+        </div>
+    </div>
+
+    <div class="row mb-3" style="background-color: azure">
+        @Html.LabelFor(m => m.ParentNationalCode, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.ParentNationalCode, new { htmlAttributes = new { @placeholder = "upper-level user SIN Number User " } })
+        </div>
+    </div>
+
+    <div class="row mb-3">
+            @Html.LabelFor(m => m.EnglishName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => m.EnglishName, new { htmlAttributes = new { @placeholder = "First and last name"} })
+            </div>
+        </div>
+    <div class="row mb-3">
+        @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @placeholder = "Phone Number" } })
+        </div>
+    </div>
+    @*<div class="row mb-3">
+            @Html.LabelFor(m => m.Address, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => m.Address, new { htmlAttributes = new { @placeholder = "Mailing Address",@Lang="fa-IR"  } })
+            </div>
+        </div>*@
+
+    <div class="row mb-3">
+        @Html.LabelFor(m => m.Address, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.Address, new { htmlAttributes = new { @placeholder = "Mailing Address" } })
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @placeholder = "Email " } })
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        @Html.LabelFor(m => m.NationalCode, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.NationalCode, new { htmlAttributes = new { @placeholder = "SIN Number" } })
+        </div>
+    </div>
+    @* <div class="row mb-3">
+            @Html.LabelFor(m => m.EnglishName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => m.EnglishName, new { htmlAttributes = new { @placeholder = "Password" } })
+            </div>
+        </div>*@
+
+
+    <div class="row mb-3">
+        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.Password, new { htmlAttributes = new { @placeholder = "Password" } })
+        </div>
+    </div>
+
+
+    <div class="row mb-3">
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.ConfirmPassword, new { htmlAttributes = new { @placeholder = "Password confirmation" } })
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        @Html.LabelFor(m => m.kartNumber, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.kartNumber, new { htmlAttributes = new { @placeholder = "Bank Card Number" } })
+        </div>
+    </div>
+    <div class="row mb-3">
+        @Html.LabelFor(m => m.AccountNumber, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.AccountNumber, new { htmlAttributes = new { @placeholder = "account number" } })
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        @Html.LabelFor(model => model.Captcha, new { @class = "control-label col-md-2" })
+
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Captcha, new { htmlAttributes = new { @placeholder = "SUM " } })
+        </div>
+        <div class="form-group col-md-4">
+            <input type="button" value="" id="refresh" class="btn btn-default" />
+            <img alt="Captcha" id="imgcpatcha" src="@Url.Action("captchaimage","Captcha")" />
+            @Html.ValidationMessageFor(model => model.Captcha)
+        </div>
+    </div>
+
+
+
+
+
+    <div class="row mb-3">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-primary " value="Submit Name" />
+        </div>
+    </div>
+
+
+}
+
+@if (!String.IsNullOrEmpty(ViewBag.info))
+{
+    <div id="info" style="position: fixed; bottom: 0; right: 0; margin-right: 1%;">
+
+        <div class="alert @ViewBag.color alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong> @ViewBag.info</strong>
+        </div>
+
+    </div>
+    <script>
+        $(function () {
+            $("#info").fadeOut(15000);
+
+
+        });
+    </script>
+}
+
+@section scripts
+{
+
+
+    <script src="~/Scripts/jquery.maskedinput.min.js"></script>
+
+    <script src="~/Scripts/jquery.numeric.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            FarsiType.ShowChangeLangButton = 0;
+            FarsiType.ChangeDir = 0;
+            //  $("input[id^='Farsi']").css('display', 'none');
+
+            $('#PhoneNumber').css('direction', 'ltr');
+            $('#PhoneNumber').css('text-align', 'right');
+            $("#PhoneNumber").mask('0999-999 9999');
+
+            //$('#kartNumber').css('direction', 'ltr');
+            //$('#kartNumber').css('text-align', 'right');
+            //$("#kartNumber").mask('9999999999999999');
+
+            $('input[type=text]').css('font-size', '16px');
+        });
+
+        $('#refresh').click(function () {
+            var d = new Date();
+            $("#imgcpatcha").attr("src", "http://" + window.location.host + "/Captcha/CaptchaImage?" + d.getTime());
+        });
+
+
+    </script>
+
+    <style>
+        .DivPassUserSpan {
+            text-align: center;
+        }
+
+        .PassUserSpan {
+            color: red;
+            font-family: tahoma;
+            font-size: 15px;
+            -o-transition: .5s;
+            -ms-transition: .5s;
+            -moz-transition: .5s;
+            -webkit-transition: .5s;
+            /* ...and now for the proper property */
+            transition: .5s;
+        }
+
+            .PassUserSpan:hover {
+                color: rgb(32, 22, 189);
+                font-family: tahoma;
+                font-size: 17px;
+                background: yellow;
+            }
+
+        .blink {
+            animation: blink-animation 1s steps(5, start) infinite;
+            -webkit-animation: blink-animation 1s steps(5, start) infinite;
+        }
+
+        @@keyframes blink-animation {
+            to {
+                visibility: hidden;
+            }
+        }
+
+        @@-webkit-keyframes blink-animation {
+            to {
+                visibility: hidden;
+            }
+        }
+
+
+        .reportPageBlockStyle {
+            border: 1px solid #d1d1d1;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            height: 220px;
+            padding-top: 45px;
+            text-align: center;
+        }
+
+        .backColorRed {
+            background-color: #d9534f !important;
+        }
+
+        #RegisterUserFor {
+            /*display: none;*/
+        }
+    </style>
+
+
+}
+
+
+

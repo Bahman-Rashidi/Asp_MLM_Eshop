@@ -1,0 +1,150 @@
+﻿@using MLM_app.Helpers
+@using MLM_app.Models;
+@using Microsoft.AspNet.Identity
+@*@model List<MLM_app.Models.Payment>*@
+@model PagedList.IPagedList<MLM_app.ViewModels.DispatchPeymentVM>
+@{
+    ViewBag.Title = "My Orders";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+@{
+    var db = new ApplicationDbContext();
+    string userId = User.Identity.GetUserId();
+}
+<h2 class="title text-center">My Orders</h2>
+<div  id="Pleasewait" class="loader" style="display: none;">
+    
+</div>
+<section id="cart_items">
+    <div class="container">
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr class="cart_menu text-center">
+                        <td>Number</td>
+                        <td>Order Number</td>
+                        <td>Payment Order Number</td>
+                         <td>User </td>
+                        <td>Amount</td>
+                        <td>Date and Time of Submission</td>
+ <td>Operation </td>
+
+                        @*<td>  @Html.ActionLink("", "InsertDateTime", new { sortOrder = ViewBag.InsertDateTimeSortParm })</td>*@
+                      
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @if (Model.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="4">You haven't submitted any orders!</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.PaymentId</td>
+                                <td>@item.SaleOrderId</td>
+                                <td>@item.SaleReferenceId</td>
+                              <td>@item.ApplicationUserEmail</td>
+                                <td>@item.Amount</td>
+                                <td>@item.InsertDateTime</td>
+                              @*  <td>                                    
+                                     @Html.OffProduct(item.Off,item.Price)                                                                        
+                                </td>*@
+                                <td>
+                                    <button class="btn btn-info peyment " data-userid="@item.ApplicationUserId" data-prymentid="@item.PaymentId" data-admount="@item.Amount">
+                                        Profitability
+
+
+                                    </button> 
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<br />
+<div class="pagination-container">
+    <div style="margin-left: 20px;">
+        page  @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)  from  @Model.PageCount
+    </div>
+</div>
+
+
+@Html.PagedListPager(Model, page => Url.Action("Orders", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+@section scripts
+{
+
+    <script>
+
+
+        $(document).ready(function() {
+
+
+            $(".peyment").click(function(e) {
+
+                var target = e.target;
+                var userid = $(target).data("userid");
+                var prymentid = $(target).data("prymentid");
+                var admount = $(target).data("admount");
+                $("#Pleasewait").css("display", "block");
+                alert("");
+
+                debugger;
+            });
+
+
+        });
+
+
+    </script>
+    
+
+    <style>
+        
+
+         .loader {
+             border: 16px solid #f3f3f3;
+             border-radius: 50%;
+             border-top: 16px solid #3498db;
+             width: 120px;
+             height: 120px;
+             -webkit-animation: spin 2s linear infinite;
+             animation: spin 2s linear infinite;
+margin: auto;
+         }
+
+        @@-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @@keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+
+        .pagination-container
+        {
+
+            float: left;
+
+
+        }
+
+        .peyment
+        {
+
+
+        }
+    </style>
+}

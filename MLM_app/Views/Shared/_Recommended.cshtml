@@ -1,0 +1,89 @@
+﻿@using MLM_app.Helpers
+@using MLM_app.Models
+@{
+    var db = new ApplicationDbContext();
+    var result = from p in db.Products
+                 orderby p.ProductID
+                 select p;
+}
+@if (result.Count() < 3)
+{
+
+}
+else
+{
+    var rowNum = new Random().Next(result.Count() - 2);
+    var row1 = result.Skip(rowNum).Take(3);
+    // Delete redundant records
+    var row2 = result.Skip(rowNum).Except(result.Join(row1, e => e.ProductID, m => m.ProductID, (e, m) => e)).Take(3);
+
+
+    <!--recommended_items-->
+    <h2 class="title text-center">Amazing Offers</h2>
+
+    <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="item active">
+
+                @foreach (var item in row1)
+                {
+
+                    <div class="col-sm-4">
+                        <div class="product-image-wrapper">
+                            <div class="single-products">
+                                <div class="productinfo text-center">
+                                    <img src="@Url.Content(item.ImageUrl)" alt="@item.ProductTitle" />
+                                    <h2>@Html.OffProduct(item.Off, item.ProductPrice)</h2>
+                                    <p>@item.ProductTitle</p>
+                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
+                                    <br />
+                                    <a href="/product/@item.ProductID/@item.ProductTitle"><i class="fa fa-list"></i>Product Details</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+
+            <div class="item">
+                @foreach (var item in row2)
+                {
+
+                    <div class="col-sm-4">
+                        <div class="product-image-wrapper">
+                            <div class="single-products">
+                                <div class="productinfo text-center">
+                                    <img src="@Url.Content(item.ProductThumbnailImageUrl)" alt="@item.ProductTitle" />
+                                    <h2>@Html.OffProduct(item.Off, item.ProductPrice)</h2>
+                                    <p>@item.ProductTitle</p>
+                                    <a id="btnAddToBasket_@item.ProductID" href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
+                                    <br />
+                                    <a href="/product/@item.ProductID/@item.ProductTitle"><i class="fa fa-list"></i>Product Details</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+
+
+
+        </div>
+        <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+            <i class="fa fa-angle-left"></i>
+        </a>
+        <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+            <i class="fa fa-angle-right"></i>
+        </a>
+
+
+    </div>
+    <!--/recommended_items-->
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+

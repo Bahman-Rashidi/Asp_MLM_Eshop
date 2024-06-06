@@ -1,0 +1,112 @@
+﻿@using MLM_app.Helpers
+@model MLM_app.ViewModels.MyOrdersViewModel
+@{
+    ViewBag.Title = "Invoice Details";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<h2 class="title text-center">@ViewBag.Title</h2>
+
+<div>
+    
+    <dl class="dl-horizontal">
+       
+        <dt>
+            @Html.DisplayNameFor(model => model.ReciptionMethod)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReciptionMethod)
+        </dd>
+
+
+
+        @* <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>*@
+
+        <dd>
+            
+
+@if (Model.ReciptionMethod == "Unknown")
+{
+            <h4>You haven't specified how to obtain the product... Please use the link below for this matter.</h4>
+                                      @Html.ActionLink("Specify how to receive", "ReciptionMethod","ShoppingCart", new { id = @Model.OrderID }, new { @class = "btn btn-success xs " })
+
+}
+
+
+        </dd>
+    </dl>
+
+</div>
+<section id="cart_items">
+    <div class="container">
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed">
+                <thead>
+                    <tr class="cart_menu">
+                        <td>Product code</td>
+                        <td>Product title</td>
+                      
+                        <td>Price</td>
+
+                        <td>Quantity</td>
+                        <td>Sum</td>
+ <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var count = 0;
+                        var price = 0;
+                    }
+                    @foreach (var item in Model.ShoppingCartViewModels)
+                    {
+
+                        count += item.ProductCount;
+                        price += item.ProductCount * item.ProductPrice;
+
+                        <tr>
+                            <td>@item.ProductID</td>
+                            <td>@item.ProductTitle</td>
+                         
+
+                            <td>@item.ProductPrice.ToString("#,0 $")</td>
+                            <td>@item.ProductCount</td>
+                            <td>@Html.TotalPrice(item.ProductCount, item.ProductPrice)</td>
+                     
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>@count</td>
+                        <td>Sum: @string.Format("{0:#,0 $}", price != null ? price : 0)</td>
+                    </tr>
+                </tfoot>
+            </table>
+            @if (Model.ShoppingCartViewModels.Any())
+            {
+
+               
+                @Html.ActionLink("List of invoices", "AllOrders", "AdminOrders", new { @class = "btn btn-success pull-left" })
+            }
+                 
+
+
+        
+        </div>
+
+
+    </div>
+</section> <!--/#cart_items-->
+

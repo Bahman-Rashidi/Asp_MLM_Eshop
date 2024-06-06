@@ -1,0 +1,72 @@
+﻿@model IEnumerable<MLM_app.Models.ProductGroup>
+
+@{
+    ViewBag.Title = "List of Cultural Product Groups";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<h2 class="title text-center"> List of Cultural Product Groups</h2>
+
+<section id="cart_items">
+    <div class="container">
+        @Html.ActionLink("Create Product Group", "Create", null, new { @class = "btn btn-primary" })
+        <p></p>
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr class="cart_menu text-center">
+                        <td>
+                            @Html.Label("Parent group")
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.ProductGroupTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.NameInSystem)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.ImageUrl)
+                        </td>
+                        <td>Operation</td>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="4">No information available for display.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Parent.ProductGroupTitle)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProductGroupTitle)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NameInSystem)
+                                </td>
+                                <td>
+                                    @if (!String.IsNullOrEmpty(@item.ImageUrl))
+                                    {
+                                        <img width="50" height="50" src="@Url.Content(@item.ImageUrl)" />
+                                    }
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.ProductGroupID }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.ProductGroupID }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.ProductGroupID })
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

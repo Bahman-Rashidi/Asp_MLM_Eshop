@@ -1,0 +1,39 @@
+﻿@model IPagedList<MLM_app.Models.ProductGroup>
+
+    <div class="col-sm-9 padding-right">
+        <div class="features_items">
+            <h2 class="title text-center">product groups</h2>
+            @foreach (var item in Model)
+            {
+                <div class="col-sm-4">
+                    <div class="product-image-wrapper">
+                        <div class="single-products">
+                            <div class="productinfo text-center">
+                                <img src="@Url.Content(item.ImageUrl)" alt="@item.ProductGroupTitle" />
+                                <h2></h2>
+                                <p>@item.ProductGroupTitle</p>
+                            </div>
+                            <div class="product-overlay">
+                                <div class="overlay-content">
+                                    <a href="@Url.Action("ShowByGroup", "AdminProducts", new {id=item.ProductGroupID},null)"><i class="fa fa-search"></i></a>
+                                    <h2></h2>
+                                    <p>View product list</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+
+    <div class="col-sm-9">
+        <div class="pagedList" id="contentPager">
+            @Html.PagedListPager(Model, page => Url.Action("ShowByGroup", "AdminProductGroups", new { page }),
+       PagedListRenderOptions.PageNumbersOnly)
+        </div>
+
+    </div>
+

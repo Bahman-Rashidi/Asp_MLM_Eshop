@@ -1,0 +1,87 @@
+﻿@model MLM_app.Models.Page
+
+@{
+    ViewBag.Title = "News Details ";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<h2 class="title text-center">News Details</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUser.EnglishName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.EnglishName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PageGropus.PageGroupTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PageGropus.PageGroupTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PageTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PageTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PageSummary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PageSummary)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PageText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PageText)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PageIsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PageIsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CommentIsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CommentIsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PageDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PageDate)
+        </dd>
+
+    </dl>
+
+   
+
+</div>
+<div class="form-group" id="buttons">
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.PageId })
+        @Html.ActionLink("Back to the menu", "Index")
+    </div>
+</div>
+

@@ -1,0 +1,46 @@
+﻿@model MLM_app.Models.Page
+
+@{
+    ViewBag.Title = "News Details";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<div class="col-sm-9">
+    <div class="blog-post-area">
+        <h2 class="title text-center">News Details</h2>
+        <div class="single-blog-post">
+            <h3>@Model.PageTitle</h3>
+            <div class="post-meta">
+                <ul>
+                    <li><i class="fa fa-user"></i> @Model.ApplicationUser.EnglishName</li>
+                    <li><i class="fa fa-clock-o"></i>@Model.PageDate.ToShortTimeString()</li>
+                    <li><i class="fa fa-calendar"></i>@Model.PageDate.ToString("yyyy/MM/dd")</li>
+                </ul>
+
+            </div>
+            <p>
+                @Html.Raw(Model.PageText)
+            </p>
+
+        </div>
+    </div>
+
+    @if (Model.CommentIsActive)
+    {
+
+ 
+
+        <div id="show-comment">
+            @{
+                Html.RenderAction("ShowComment", "Comments", new { pageId = Model.PageId });
+            }
+        </div>
+
+       <div id="form-comment">
+            @{
+        Html.RenderAction("InsertComment", "Comments", new { pageId = Model.PageId });
+            }
+
+        </div>
+    }
+</div>

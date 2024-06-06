@@ -1,0 +1,64 @@
+﻿@model MLM_app.ViewModels.EmailSendViewModel
+@{
+    ViewBag.Title = "Send Email";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <h2 class="title text-center">Send Email</h2>
+        @{
+    Html.RenderPartial("_AlertPartial");
+        }
+        @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email)
+            </div>
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+        </div>
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.Subject, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Subject)
+            </div>
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ValidationMessageFor(model => model.Subject)
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.Body, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Body)
+            </div>
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ValidationMessageFor(model => model.Body)
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.IsSenhvnrimUrl, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(x=>x.IsSenhvnrimUrl);
+            </div>
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ValidationMessageFor(model => model.IsSenhvnrimUrl)
+            </div>
+        </div>
+
+
+        <div class="row mb-3">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" name="submit" value="Send" class="btn btn-primary" />
+
+            </div>
+        </div>
+    </div>
+
+}

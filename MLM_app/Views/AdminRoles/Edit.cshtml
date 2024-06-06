@@ -1,0 +1,78 @@
+﻿@using MLM_app.Models
+
+@* In this section, we define the role model of the view. *@
+@model MLM_app.ViewModels.RoleEditModel
+@{
+    ViewBag.Title = "Edit Role";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+@Html.ValidationSummary()
+@using (Html.BeginForm("Edit", "AdminRoles", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="roleName" value="@Model.Role.Name" />
+    <section class="panel">
+        <header class="panel-heading">
+            add  Role  @Model.Role.Name
+        </header>
+        <div class="panel-body">
+            <table class="table table-striped table-bordered">
+                @if (!Model.NonMembers.Any())
+                {
+                    <tr><td colspan="2">All users are members of the role</td></tr>
+                }
+                else
+                {
+                    <tr><td> User ID </td><td>add  Role</td></tr>
+                    foreach (ApplicationUser user in Model.NonMembers)
+                    {
+                        <tr>
+                            <td>@user.UserName</td>
+                            <td>
+                                <input type="checkbox" name="IdsToAdd" value="@user.Id">
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </section>
+
+    <section class="panel">
+        <header class="panel-heading">
+            Delete  Role  @Model.Role.Name
+        </header>
+        <div class="panel-body">
+            <table class="table table-striped table-bordered">
+                @if (Model.Members.Count() == 0)
+                {
+                    <tr><td colspan="2">None of the users are members of the role</td></tr>
+                }
+                else
+                {
+                    <tr><td> User ID </td><td>Delete Role</td></tr>
+                    foreach (ApplicationUser user in Model.Members)
+                    {
+                        <tr>
+                            <td>@user.UserName</td>
+                            <td>
+                                <input type="checkbox" name="IdsToDelete" value="@user.Id">
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </section>
+
+    <div id="buttons">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-10">
+            <input type="submit" class="btn btn-primary" value="Submit" />
+            @Html.ActionLink("Back to the menu", "Index")
+        </div>
+    </div>
+}
+

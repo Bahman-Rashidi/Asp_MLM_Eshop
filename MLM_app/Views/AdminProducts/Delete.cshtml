@@ -1,0 +1,88 @@
+﻿@model MLM_app.Models.Product
+
+@{
+    ViewBag.Title = "Product Delete";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<h2 class="title text-center">Product Delete </h2>
+
+
+<h3>Are you sure you want to delete the product?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductGroups.ProductGroupTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductGroups.ProductGroupTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+
+        <dd>
+            @if (!String.IsNullOrEmpty(@Model.ImageUrl))
+            {
+                <img width="120" height="120" alt="" src="@Url.Content(@Model.ImageUrl)" />
+            }
+        </dd>
+
+        <dt>
+            @*@Html.DisplayNameFor(model => model.ProductThumbnailImageUrl)*@
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.ProductThumbnailImageUrl)*@
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div id="buttons">
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-10">
+                <input type="submit" class="btn btn-primary" value="Delete" />
+                @Html.ActionLink("Back to the menu", "Index")
+            </div>
+        </div>
+    }
+</div>

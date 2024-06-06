@@ -1,0 +1,81 @@
+﻿@model IEnumerable<MLM_app.Models.Page>
+
+@{
+    ViewBag.Title = " List of news";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<h2 class="title text-center"> List of news</h2>
+
+<section id="cart_items">
+    <div class="container">
+        @Html.ActionLink("Submit News", "Create", null, new { @class = "btn btn-primary" })
+        <p></p>
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr class="cart_menu text-center">
+                        <td>
+                            @Html.Label("Author")
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.PageGropus.PageGroupTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.PageTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.PageIsActive)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.CommentIsActive)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.PageDate)
+                        </td>
+                        <td>Operation</td>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6">No information available for display.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ApplicationUser.EnglishName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PageGropus.PageGroupTitle)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PageTitle)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PageIsActive)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CommentIsActive)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PageDate)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.PageId }) |
+                                    @*@Html.ActionLink("Details", "Details", new { id = item.PageId }) |*@
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.PageId })
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,33 @@
+﻿
+@model  List<MLM_app.Models.SpecificPurchaseDay>
+
+
+
+@{
+    ViewBag.Title = "Logo";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+
+    var Days = Model.Select(x => x.DayOfMount);
+}
+
+<script src="~/Scripts/PersianDatePicker.min.js"></script>
+<link href="~/Content/PersianDatePicker.min.css" rel="stylesheet" />
+<h2 class="title text-center">Managing shopping days</h2>
+
+<div  id="container">
+    
+    <div class="row">
+      @foreach (var items in Days)
+      {
+        <div  style="margin-top: 20px;width: 300px;border-bottom: 1px solid black" >
+            <input type="text" value='@items' style="width: 150px;float: left;margin-right: 10px;"   disabled /> <label>Day of the month</label>
+        </div>
+          
+      }
+
+
+
+    </div>
+    
+</div>
+

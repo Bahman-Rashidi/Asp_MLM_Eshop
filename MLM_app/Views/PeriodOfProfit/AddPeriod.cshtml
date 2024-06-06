@@ -1,0 +1,45 @@
+﻿@using MLM_app.Helpers
+@using MLM_app.Models;
+@using Microsoft.AspNet.Identity
+
+@model MLM_app.Models.PeriodOfProfit
+@{
+    ViewBag.Title = "My Orders";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+@{
+    var db = new ApplicationDbContext();
+    string userId = User.Identity.GetUserId();
+}
+
+
+
+<h2 class="title text-center">Period management</h2>
+
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(false)
+      
+        <div class="row mb-3">
+            <label>Start date </label>
+            @Html.EditorFor(x => x.StartDate, new { @class = "form-control" })
+        </div>
+        <div class="row mb-3">
+            <label>End Date </label>
+            @Html.EditorFor(x => x.EndDate, new { @class = "form-control" })
+        </div>
+
+
+        <div class="row mb-3" id="buttons">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+                @Html.ActionLink("Back to the menu", "Index")
+            </div>
+        </div>
+    </div>
+}

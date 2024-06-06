@@ -1,0 +1,216 @@
+﻿@using MLM_app.Helpers
+
+@model PagedList.IPagedList<MLM_app.ViewModels.OrdersViewModel>
+@{
+    ViewBag.Title = "Order Details";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+
+@section scripts
+{
+    <style>
+
+        .BtnpopUp {
+
+
+
+        }
+        .btnUser
+        { }
+
+
+    </style>
+    
+
+    <script>
+        $(document).ready(function() {
+
+
+            var urla = '@Url.Action("GetUserProfile", "ShoppingCart")';
+
+            $('.btnUser').click(function (e) {
+                debugger;
+                var userid = $(this).attr('data-userid');
+                var urlac;
+                 urlac = urla + "/?userId=" + userid ;
+                debugger;
+                $.ajax({
+                    type: "GET",
+                    //  url: 'AdminReport/GetRefinaryReport',
+                    url: urlac,
+
+                    //data: RefinaryViewModel,
+                    dataType: "json",
+                    success: function (resulta) {
+                        debugger;
+                        $("#contractInfo").css("display", "block");
+
+                        $('#addresss').html(resulta.Address);
+
+                        $('#mobileNumber').html(resulta.PhoneNumber);
+                        $('#email').html(resulta.Email);
+
+                        $('#CodePosti').html(resulta.ZipCode);
+
+                    }
+                });
+
+
+            })
+
+        });
+
+
+    </script>
+
+}
+
+<div id="contractInfo" style="display: none;font-family: tahoma;font-size:14px">
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-sm-offset-1">
+            
+                <fieldset>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Postal code :</label>
+</div>
+                        <div class="col-md-6" >
+                         <label id="CodePosti"></label>
+                                
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-2">
+                                           <label>Phone number :</label>
+         
+                        </div>
+                        <div class="col-md-6">
+                            <label id="mobileNumber"></label>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label >Email :</label>
+ </div>
+                        <div class="col-md-6">
+                            <label id="email"></label>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                           <div class="col-md-2">
+                               <label>Address :</label>
+ </div>
+                        <div class="col-md-6">
+                            <label id="addresss"></label>
+                        </div>
+                    </div>
+
+
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<section id="cart_items">
+    <div class="container">
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed" >
+                <thead>
+                    <tr class="cart_menu text-center">
+                        <td>Invoice number</td>
+ <td>  @Html.ActionLink("Invoice date", "AllOrders", new { sortOrder = ViewBag.OrderDate })</td>
+                        <td>Payment status</td>
+                        <td>Method of delivery</td>
+                        <td>SaleReferenceId</td>
+                        <td>ReferenceNumber</td>
+                        <td>Call charges</td>
+                        <td>Shipping cost</td>
+                        <td>Packing cost</td>
+                        <td>Total invoice amount</td>
+                        <td>Buyer</td>
+                        <td>Invoice items</td>
+                    
+                    </tr>
+                </thead>
+                <tbody class="text-center" id="OrderTbale">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.OrderID</td>
+                            <td>@item.OrderDate</td>
+                            <td>
+                                @if (item.IsFinalized)
+                                {
+                                    @:Settled
+                                }
+                                else
+                                {
+                                    @:Unsettled
+                                }
+                            </td>
+                            <td>@item.ReciptionMethod</td>
+                            <td>@item.SaleReferenceId</td>
+    <td>@item.ReferenceNumber</td>
+                            <td>@item.ContactPrice.ToString("#,0 $")</td>
+                            <td>
+                                  @if (!item.IsFinalized && item.ReciptionMethod != "")
+                                  {
+                                      @item.Price.ToString("#,0 $");
+                                  }
+                                  else
+                                  {
+   <span>Unknown</span>
+                                  }
+
+                            </td>
+
+                            <td>@item.packingPrice.ToString("#,0 $")</td>
+                            <td>@item.OrderTotal.ToString("#,0 $")</td>
+                            <td>
+                              
+                       <button class="btn btn-info btnUser"   data-userid="@item.ApplicationUserId">Buyer</button>
+                               
+                            </td>
+
+
+                          
+                            <td>
+                            @Html.ActionLink("Invoice Details", "details","AdminOrders", new { id = @item.OrderID }, new {  target="_blank", @class = "btn btn-success xs" })
+
+                            </td>
+                          
+
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+
+
+<br />
+<div class="pagination-container">
+    <div style="margin-left: 20px;">
+        page   @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)  from  @Model.PageCount
+    </div>
+</div>
+
+
+@Html.PagedListPager(Model, page => Url.Action("AllOrders", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

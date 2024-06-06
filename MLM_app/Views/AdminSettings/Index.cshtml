@@ -1,0 +1,52 @@
+﻿@using MLM_app.Helpers
+@model IEnumerable<MLM_app.Models.Setting>
+
+@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<h2 class="title text-center">Settings</h2>
+<section id="cart_items">
+    <div class="container">
+        <p></p>
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed table-hover">
+                <tr class="cart_menu text-center">
+
+                    @if (!Model.Any())
+                    {
+                    <tr>
+                        <td colspan="4" class="text-center">
+                            There is no information available for editing pages
+                            <br />
+                            @Html.ActionLink("Submit", "Create", null, new { @class = "btn btn-primary pull-left" })
+                        </td>
+                    </tr>
+                    }
+                    else
+                    {
+                        <thead>
+                            <tr class="cart_menu text-center">
+                                <td>About Us Page</td>
+                                <td>Contact Us Page</td>
+                                <td>Edit</td>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>About Us Page</td>
+                                <td>Contact Us Page</td>
+                                <td>@Html.ActionLink("Edit", "Edit", new { id = @item.SettingId }, new { @class = "btn btn-primary btn-xs" })</td>
+                            </tr>
+
+                            }
+
+                        </tbody>
+                    }
+                </table>
+            </div>
+        </div>
+    </section>

@@ -1,0 +1,42 @@
+﻿@using MLM_app.Infrastructure
+@{
+    var alerts = TempData.ContainsKey(Alert.TempDataKey) ? (List<Alert>)TempData[Alert.TempDataKey] : new List<Alert>();
+
+    @*if (alerts.Any())
+        {
+            <hr />
+        }*@
+
+    foreach (var alert in alerts)
+    {
+        var dismissableClass = alert.Dismissable ? "alert-dismissable" : null;
+        <div id="Alert" class="alert alert-@alert.AlertStyle @dismissableClass">
+            @if (alert.Dismissable)
+            {
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            }
+            @Html.Raw(alert.Message)
+        </div>
+    }
+}
+
+@*<script>
+        $(function () {
+            $("#Alert").fadeOut(15000);
+        })
+    </script>*@
+
+
+@section scripts {
+
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            $(function () {
+                $("#Alert").fadeOut(15000);
+            })
+        });
+
+    </script>
+}

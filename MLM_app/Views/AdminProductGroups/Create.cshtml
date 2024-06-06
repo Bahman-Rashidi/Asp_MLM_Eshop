@@ -1,0 +1,294 @@
+﻿@model MLM_app.Models.ProductGroup
+
+@{
+    ViewBag.Title = "add product group";
+ 
+
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+
+    var getTreeJsonUrl =  Url.Action(actionName: "GetProductGroupTreeJson", controllerName: "AdminProductGroups");
+    var doJsTreeOperationUrl = Url.Action(actionName: "DoJsTreeOperation", controllerName: "AdminProductGroups");
+
+}
+
+
+
+@section scripts
+{
+   
+
+    <script src="~/Scripts/jstree.min.js"></script>
+<link href="~/Content/themes/default/style.min.css" rel="stylesheet" />
+
+<script>
+
+    $(document).ready(function () {
+
+
+        function postJsTreeOperation(operation, data, onDone, onFail) {
+
+            if (operation == "DeleteNode") {
+                $("#myModal").modal('show');
+ $('#ConfirmBtnDelete').unbind('click');
+                $("#ConfirmBtnDelete").on("click", function () {
+                    debugger;
+                    $.post('@doJsTreeOperationUrl',
+{
+    'operation': operation,
+    'id': data.node.id,
+    'parentId': data.node.parent,
+    'position': data.position,
+    'text': data.node.text,
+    'originalId': data.original ? data.original.id : data.node.original.id,
+    'href': data.node.a_attr.href
+})
+.done(function (result) {
+    onDone(result);
+})
+.fail(function (result) {
+    alert('failed.....');
+    onFail(result);
+});
+
+                });
+               
+            } else {
+
+
+                $.post('@doJsTreeOperationUrl',
+                    {
+                        'operation': operation,
+                        'id': data.node.id,
+                        'parentId': data.node.parent,
+                        'position': data.position,
+                        'text': data.node.text,
+                        'originalId': data.original ? data.original.id : data.node.original.id,
+                        'href': data.node.a_attr.href
+                    })
+                    .done(function (result) {
+                        onDone(result);
+                    })
+                    .fail(function (result) {
+                        alert('failed.....');
+                        onFail(result);
+                    });
+            }
+        }
+
+
+        $('#jstree').jstree({
+            "core": {
+                "multiple": false,
+                "check_callback": true,
+                'data': {
+                    'url': '@getTreeJsonUrl',
+                    "type": "POST",
+                    "dataType": "json",
+                    "contentType": "application/json; charset=utf8",
+                    'data': function (node) {
+                        return { 'id': node.id };
+                    }
+                },
+                'themes': {
+                    'variant': 'small',
+                    'stripes': true
+                }
+            },
+            "types": {
+                "default": {
+                    "icon": '@Url.Content("~/Content/images/bookmark_book_open.png")'
+                },
+            },
+            "plugins": ["contextmenu", "dnd", "state", "types", "wholerow", "sort", "unique"],
+            "contextmenu": {
+                "items": function (o, cb) {
+                    var items = $.jstree.defaults.contextmenu.items();
+                    items["create"].label = "Create subcategory";
+                    items["rename"].label = "Change Name";
+                    items["remove"].label = "Delete";
+                    var cpp = items["ccp"];
+                    cpp.label = "Edit";
+                    var subMenu = cpp["submenu"];
+                    subMenu["copy"].label = "Copy";
+                    subMenu["paste"].label = "Paste";
+                    subMenu["cut"].label = "Cute";
+                    return items;
+                }
+            }
+        })
+            .on('delete_node.jstree', function (e, data) {
+                postJsTreeOperation('DeleteNode', data,
+                    function (result) {
+                        debugger;
+                        $("#txtTitle").val('');
+                        $("#txtUrl").val('');
+                        $("#myModal").modal('hide');
+                    },
+                    function (result) {
+                        debugger;
+                        data.instance.refresh();
+                    });
+            })
+            .on('create_node.jstree', function (e, data) {
+                postJsTreeOperation('CreateNode', data,
+                    function (result) {
+                        data.instance.set_id(data.node, result.id);
+                    },
+                    function (result) {
+                        data.instance.refresh();
+                    });
+            })
+            .on('rename_node.jstree', function (e, data) {
+                postJsTreeOperation('RenameNode', data,
+                    function (result) {
+                        $("#txtTitle").val(data.node.text);
+                    },
+                    function (result) {
+                        data.instance.refresh();
+                    });
+            })
+            .on('move_node.jstree', function (e, data) {
+                postJsTreeOperation('MoveNode', data,
+                    function (result) {
+                    },
+                    function (result) {
+                        data.instance.refresh();
+                    });
+            })
+            .on('copy_node.jstree', function (e, data) {
+                postJsTreeOperation('CopyNode', data,
+                    function (result) {
+                        data.instance.set_id(data.node, result.id);
+                    },
+                    function (result) {
+                        data.instance.refresh();
+                    });
+            })
+            .on('changed.jstree', function (e, data) {
+
+            })
+            .on('dblclick.jstree', function (e) {
+                var href = selectedData.node.a_attr.href;
+                alert('selected node: ' + selectedData.node.text + ', href:' + href);
+
+                // auto redirect
+                if (href) {
+                    window.location = href;
+                }
+
+                // activate edit mode
+                //var inst = $.jstree.reference(selectedData.node);
+                //inst.edit(selectedData.node);
+            })
+            .on('select_node.jstree', function (e, data) {
+                //alert('selected node: ' + data.node.text);
+                selectedData = data;
+                $("#txtTitle").val(data.node.text);
+                $("#txtUrl").val(data.node.a_attr.href);
+            });
+
+    });
+</script>
+
+}
+<h2 class="title text-center">add a product group</h2>
+<div class="col-md-3 " style="border-left: 1px black solid;float:right">
+    <div class="left-sidebar">
+
+                     
+        <div class="brands_products">
+            <h2>product groups</h2>
+            <div class="brands-name">
+                @*<ul class="nav nav-pills nav-stacked">
+                </ul>
+                *@
+
+                <div id="jstree">
+                </div>
+            </div>
+        </div>
+     
+
+    </div>
+</div>
+
+<div class="col-md-8 ">
+    @using (Html.BeginForm("Create", "AdminProductGroups", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.ParentId, "parent product group", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ParentId", "Select the parent product group")
+                @Html.ValidationMessageFor(model => model.ParentId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.ProductGroupTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProductGroupTitle, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ProductGroupTitle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.ImageUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ImageUrl, new { htmlAttributes = new { @class = "" } })
+                @Html.ValidationMessageFor(model => model.ImageUrl, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3" id="buttons">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit" class="btn btn-default" />
+                @Html.ActionLink("Back to the menu", "Index")
+            </div>
+        </div>
+    </div>
+    }
+</div>
+
+
+
+
+<div id="myModal" class="modal fade">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                <h4 class="modal-title">Warning</h4>
+
+            </div>
+
+            <div class="modal-body">
+
+                <h2>With Delete, all subitems will also be deleted</h2>
+
+                <h3 class="text-warning"><small>Are you sure?</small></h3>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" id="CancelBtnDelete" class="btn btn-default" data-dismiss="modal">Cancel</button>
+
+                <button type="button" id="ConfirmBtnDelete" class="btn btn-primary">Apply Changes</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+

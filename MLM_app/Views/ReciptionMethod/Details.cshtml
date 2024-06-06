@@ -1,0 +1,60 @@
+﻿@using MLM_app.Helpers
+@model MLM_app.Models.ReciptionMethod
+@{
+    ViewBag.Title = "Details ";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<h2 class="title text-center">Details </h2>
+
+<div>
+    <dl class="dl-horizontal">
+      
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EnReceptionMethodName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EnReceptionMethodName)
+        </dd>
+
+        @*<dt>
+            @Html.DisplayNameFor(model => model.FaReceptionMethodName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FaReceptionMethodName)
+        </dd>*@
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReceptionMethodText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReceptionMethodText)
+        </dd>
+
+        
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+    </dl>
+
+   
+
+</div>
+<div class="form-group" id="buttons">
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ReciptionMethodId })
+        @Html.ActionLink("Back to the menu", "Index")
+    </div>
+</div>
+
+

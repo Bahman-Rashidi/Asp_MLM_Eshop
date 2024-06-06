@@ -1,0 +1,47 @@
+﻿@using MLM_app.Helpers
+@model MLM_app.Models.ReciptionMethod
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+
+
+}
+@section scripts
+{
+    
+
+}
+
+<h2 class="title text-center">Edit </h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(false)
+        @Html.HiddenFor(x => x.ReciptionMethodId)
+        @*<div class="form-group">
+            @Html.LabelFor(x=>x.FaReceptionMethodName)
+            @Html.EditorFor(x => x.FaReceptionMethodName, new { @class = "form-control" })
+        </div>*@
+        <div class="form-group">
+            @Html.LabelFor(x=>x.EnReceptionMethodName)
+            @Html.EditorFor(x => x.EnReceptionMethodName, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x=>x.ReceptionMethodText)
+            @Html.EditorFor(x => x.ReceptionMethodText, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x=>x.Price)
+            @Html.EditorFor(x => x.Price, new { @class = "form-control" })
+        </div>
+        <div class="form-group" id="buttons">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit" class="btn btn-default" />
+                @Html.ActionLink("Back to the menu", "Index")
+            </div>
+        </div>
+    </div>
+}

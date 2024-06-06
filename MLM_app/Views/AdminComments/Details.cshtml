@@ -1,0 +1,77 @@
+﻿@model MLM_app.Models.Comment
+
+@{
+    ViewBag.Title = "Details comment";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<h2 class="title text-center">Details comment</h2>
+
+<div>
+    <dl class="dl-horizontal">
+       
+        <dt>
+            @Html.DisplayNameFor(model => model.Parent.CommentContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Parent.CommentContent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Products.ProductTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Products.ProductTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CommentDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CommentDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CommentIsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CommentIsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CommentContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CommentContent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Author)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Author)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AuthorEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AuthorEmail)
+        </dd>
+
+    </dl>
+</div>
+<div class="form-group" id="buttons">
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.CommentId })
+        @Html.ActionLink("Back to the menu", "Index")
+    </div>
+</div>
+

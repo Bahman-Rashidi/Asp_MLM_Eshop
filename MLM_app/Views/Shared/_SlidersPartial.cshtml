@@ -1,0 +1,66 @@
+﻿@using MLM_app.Models
+@using Microsoft.Ajax.Utilities
+
+@{
+    ApplicationDbContext db = new ApplicationDbContext();
+
+    if (db.Sliders.Count() != 0)
+    {
+    <div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+
+        @{var active = "active";
+        }
+        <div class="carousel-indicators">
+
+            @for (int i = 0; i < db.Sliders.Count(); i++)
+            {
+                @*<li data-target="#slider-carousel" data-slide-to="@i" class="@active"></li>
+                active = string.Empty;*@
+
+                <button type="button" data-bs-target="#demo" data-bs-slide-to="@i" class="@active"></button>
+                active = string.Empty;
+            }
+
+        </div>
+        <div class="carousel-inner">
+
+
+            @{active = "active";}
+
+            @foreach (var item in db.Sliders.OrderBy(x => x.Order))
+            {
+
+
+                @* active = string.Empty;*@
+
+                <div class="carousel-item @active" >
+
+                    <div class="col-sm-7" style="margin: auto">
+
+                        <h1 style="position: absolute; left: 10px; "><span>Test title</span></h1>
+                        <p style="position: absolute; top: 40px; margin: auto ">@item.Title</p>
+                        <div style="position: absolute; top: 60px; " class="btn btn-default get">@Html.ActionLink("Details ", "../AdminSliders/Details", new { id = item.SliderId }) </div>
+
+                        <img src="@Url.Content(item.ImageUrl)" alt="@item.Title" class="d-block" style="width:70%;height:350px;margin:auto">
+                    </div>
+                </div>
+                active = string.Empty;
+
+
+            }
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+        
+
+
+    </div>
+
+                    }
+                }

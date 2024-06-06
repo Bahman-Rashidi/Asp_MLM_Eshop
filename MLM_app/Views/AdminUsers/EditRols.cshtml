@@ -1,0 +1,235 @@
+﻿@using MLM_app.Models
+@using Microsoft.AspNet.Identity
+@model MLM_app.Models.ApplicationUser
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+var context = new ApplicationDbContext();
+//var allUsers = context.Users.ToList();
+var allRoles = context.Roles.ToList();
+
+
+
+
+}
+@section scripts
+{
+    
+    <script src="~/Scripts/chosen_v1.5.1/chosen.jquery.min.js"></script>
+    <script src="~/Scripts/chosen_v1.5.1/chosen.proto.min.js"></script>
+    <link href="~/Scripts/chosen_v1.5.1/chosen.min.css" rel="stylesheet" />
+
+    <script>
+        var sd = [];
+        $(document).ready(function() {
+
+
+            sd = @Html.Raw(Json.Encode(allRoles));
+            // var data = [@Html.Raw(String.Join(",", allRoles.Select(i => "'" + i.Name + "'" + "'" + i.Id + "'")))];
+          
+            for (var i = 0; i < sd.length; i++) {
+
+                $("#chozak").append('<option data-description="' + sd[i].Name + '" data-deviceID="' + sd[i].Id + '" value="' + sd[i].Id + '">' + sd[i].Name + '</option>');
+
+
+            }
+
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+                '.chosen-select-width': { width: "95%" },
+                // '.chosen-select': { max_selected_options: 1 }
+            }
+            for (var selector in config) {
+                $("#chozak").chosen(config[selector]);
+            }
+
+            $("#chozak").change(function(evt) {
+
+
+                for (var j = 0; j < evt.target.selectedOptions.length; j++) {
+
+
+                    selectedcarDeviceId = evt.target.selectedOptions[0].getAttribute("data-deviceid");
+                    var carid = evt.target.selectedOptions[0].value;
+                   
+                    for (var i = 0; i < sd.length; i++) {
+
+
+                        //if (result[i].uniqueID == carid) {
+
+
+                        //    var lastValidLatitude = result[i].lastValidLatitude;
+                        //    var lastValidLongitude = result[i].lastValidLongitude;
+                        //    var dsd = new Point(lastValidLatitude, lastValidLongitude);
+                        //    debugger;
+
+                        //    if (result[i].Geometry != null) {
+                        //        ShowAvlCar(lastValidLatitude, lastValidLongitude, result[i].equipmentType, result[i].simPhoneNumber, result[i].lastUpdateTime, result[i].Geometry)
+
+                        //    } else {
+
+                        //        alert("selected item dont have valid coordinates")
+                        //    }
+
+
+                        //}
+
+
+                    }
+
+
+                }
+
+            });
+
+
+            var data = { UserId: '@Model.Id' }
+
+
+            $('#chozak_chosen').css("display", "none");
+            var UserDbRols = [];
+            $.ajax({
+                type: "POST",
+                url: '/AdminUsers/GetUserRols',
+                data: data,
+                dataType: "json",
+                success: function(resulta) {
+
+                    debugger;
+                    for (var i = 0; i < sd.length; i++) {
+
+
+                        for (var j = 0; j < resulta.length; j++) {
+
+                            if (sd[i].Name == resulta[j]) {
+
+                                var ddddf = sd[i].Name;
+                                var vfv = sd[i].Id;
+
+                                debugger;
+
+                                UserDbRols.push(vfv);
+                             
+
+
+                            }
+
+
+                        }
+
+                    }
+
+                    $('#chozak').val(UserDbRols);
+                    $('#chozak').trigger('chosen:updated');
+
+                    $('#LoadedDive').css("display", "none");
+                    $('#chozak_chosen').css("display", "block");
+
+                    //LoadedDive
+                    //sd
+                    
+                }
+
+
+            });
+
+
+            $("#BtnSubmit").click(function(evt) {
+
+                $('#LoadedDiveInsert').css("display", "block");
+
+                $("#BtnSubmit").attr("disabled", true);
+                evt.preventDefault();
+
+                var selectedRols = $('#chozak').val();
+                var data = { UsreId: '@Model.Id', RolIds: selectedRols };
+
+                debugger;
+                $.ajax({
+                    type: "POST",
+                    url: '/AdminUsers/EditUserRols',
+                    data: data,
+                    dataType: "json",
+                    success: function(resulta) {
+                        $("#BtnSubmit").attr("disabled", false);
+
+                        $('#LoadedDiveInsert').css("display", "none");
+                        $('#chozak_chosen').css("display", "block");
+
+                        //LoadedDive
+                        //sd
+                        debugger;
+                    }
+
+
+                });
+
+
+            });
+
+         
+
+
+        });
+    </script>
+
+}
+
+
+
+
+
+<h2 class="title text-center">Edit User </h2>
+
+<div class="form-group">
+    <label>User Name</label>
+    <p class="form-control-static">@Model.UserName</p>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(false)
+        @Html.HiddenFor(x => x.Id)
+
+
+        <div class="form-group">
+            <label>Roles </label>
+
+             <div class="side-by-side clearfix">
+
+                <div>
+
+                    <select id="chozak" data-placeholder="select Role ..." class="chosen-select chosen-rtl" multiple style="width:210px;" tabindex="4">
+                                
+                    </select>
+                </div>
+            </div>
+
+           
+        </div>
+
+
+        <div class="form-group" id="LoadedDive">
+            <label>Loading...</label>
+            <img src="~/Images/loader.gif" />
+        </div>
+
+
+
+        <div class="form-group" id="LoadedDiveInsert" style="display: none">
+            <label>Submitting..</label>
+            <img src="~/Images/loader.gif" />
+        </div>
+        
+        <div class="form-group" id="buttons">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit" class="btn btn-default" id="BtnSubmit" />
+                @Html.ActionLink("Back to the menu", "Index")
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,48 @@
+﻿@using MLM_app.Models
+
+@{
+    var db = new ApplicationDbContext();
+}
+
+<h2>Product Groups</h2>
+<!--category-products-->
+<div class="panel-group category-products" id="accordian">
+    <!--category-productsr-->
+    @foreach (var item in db.ProductGroups.Where(x => x.ParentId == null))
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordian" href="#@item.NameInSystem">
+
+                        <span class="badge pull-left"><i class="fa fa-plus"></i></span>
+                        @item.ProductGroupTitle
+                    </a>
+                </h4>
+            </div>
+            @{
+ 
+                var child = db.ProductGroups.Where(x => x.ParentId == item.ProductGroupID).ToList();
+                if (child.Count > 0)
+                {
+                    <div id="@item.NameInSystem" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <ul>
+                                @foreach (var detail in child)
+                                {
+                                    <li><a href="@Url.Action("ShowByGroup", "AdminProducts", new {id=detail.ProductGroupID},null)">@detail.ProductGroupTitle</a></li>
+                                }
+
+                            </ul>
+                        </div>
+
+                    </div>
+                }
+
+            }
+
+        </div>
+    }
+
+</div>
+<!--/category-products-->

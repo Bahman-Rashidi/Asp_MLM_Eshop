@@ -1,0 +1,218 @@
+﻿body {
+    overflow: -moz-scrollbars-vertical !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+}
+.container {
+
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+
+#box-search {
+    float: right;
+    margin-bottom: 10px;
+}
+
+#search-input {
+    color: #000;
+    font-family: Tahoma;
+    font-size: 12px;
+    border: 1px solid #7d7e20;
+    float: right;
+    /*width: 483px;*/
+    width: 70%;
+        
+}
+ .rounded_rectangle .bullet.green {
+    background: #ebffeb none repeat scroll 0 0 !important;
+    border-color: #62b965;
+}
+.rounded_rectangle .rounded_rectangle_over {
+    background: #62b965 none repeat scroll 0 0;
+    height: 2px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.rounded_rectangle .bullet.green.tick {
+    background: #62b965 url("../Content/images/diji.png") no-repeat scroll -810px -476px !important;
+    border-color: #62b965;
+}
+.rounded_rectangle .dashed div {
+    background: #62b965 none repeat scroll 0 0;
+    float: right;
+    height: 2px;
+    margin: 2px 3px;
+    width: 11px;
+}
+.rounded_rectangle .dashed {
+    height: 2px;
+    position: absolute;
+    right: -77px;
+    top: -2px;
+}
+#search-submit {
+    float: right;
+}
+
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+ .dashed {
+    height: 2px;
+    position: absolute;
+    right: -77px;
+    top: -2px;
+}
+.steps .rounded_rectangle {
+    background-color: #dee1e7;
+    border-radius: 15px;
+    height: 2px;
+    margin: 15px auto;
+    position: relative;
+    width: 72%;
+}
+.spacer.first {
+    right: -12px;
+}
+.s_title {
+    color: #818897;
+    font-size: 14px;
+    position: absolute;
+    right: -60px;
+    text-align: center;
+    top: 35px;
+    width: 140px;
+}
+.spacer {
+    background: #fafcfc none repeat scroll 0 0;
+    display: inline-block;
+    height: 20px;
+    position: absolute;
+    width: 9px;
+}
+.step_user {
+    border: 0 none;
+    width: 0;
+}
+.pi {
+    right: 66%;
+}
+.or {
+    right: 33%;
+}
+#dk-cart-prograsbar {
+    /*background: #fafcfc none repeat scroll 0 0;*/
+    height: 105px;
+}
+.spacer {
+    background: #fafcfc none repeat scroll 0 0;
+    display: inline-block;
+    height: 20px;
+    position: absolute;
+    width: 9px;
+}
+.finish {
+    left: 0;
+}
+.second {#dk-cart-prograsbar
+    left: -12px;
+}
+.bullet {
+    background: #fafafa none repeat scroll 0 0;
+    border: 3px solid #bec2cc;
+    border-radius: 100%;
+    display: block;
+    height: 28px;
+    position: absolute;
+    top: -11px;
+    width: 28px;
+}
+.clearfix::after {
+    clear: both;
+    content: " ";
+    display: block;
+    font-size: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+.rounded_rectangle .rounded_rectangle_over {
+    background: #62b965 none repeat scroll 0 0;
+    height: 2px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+/*********************************************************/
+.field-validation-error {
+    color: #b94a48;
+    background-image: url(/Images/error.png);
+    background-repeat: no-repeat;
+    padding-left: 22px;
+    background-size: contain;
+    /*color: #ff0000;*/
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors {
+    /*font-weight: bold;
+    color: #ff0000;*/
+    color: #b94a48;
+    background-image: url(/Images/error.png);
+    background-repeat: no-repeat;
+    padding-left: 44px;
+    background-size: contain;
+}
+
+
+.validation-summary-valid {
+    display: none;
+}
+/*********************************************************/
+
+#refresh {
+    background: url(/Images/refresh.png) no-repeat;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    background-size: 25px;
+    border: none;
+    float: right;
+}
+
+.discount{
+	background:url(../Images/discount-img.png) no-repeat 0 0;
+	position: absolute;
+	top: 30px;
+	width: 42px;
+	height: 42px;
+}
+.discount span.percentage{
+	color: #FFF;
+	font-size: 1em;
+	font-weight: bold;
+	line-height: 40px;
+}
+

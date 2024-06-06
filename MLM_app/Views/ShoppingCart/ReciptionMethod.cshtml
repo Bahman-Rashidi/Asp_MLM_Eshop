@@ -1,0 +1,112 @@
+﻿@using MLM_app.Helpers
+@using MLM_app.Models
+@model MLM_app.Models.Order
+@{
+    ViewBag.Title = "Shopping cart";
+    Layout = "~/Views/Shared/_LayoutMlM.cshtml";
+    List<MLM_app.Models.ReciptionMethod> der = ViewBag.ReciptionMethods;
+}
+    <div class="row">
+        <div id="dk-cart-prograsbar">
+            <div id="ctl10_Progressbar_pnlSteps">
+	
+                <div class="steps">
+                    <div class="rounded_rectangle">
+
+                        <span class="bullet login green tick" id="ctl10_Progressbar_lblBullet_1">
+                            <a data-url="/Cart" class="s_title " id="ctl10_Progressbar_lblTitle_1" href="#"><span>Enter the store</span><br/><span>Step one</span></a>
+                        </span>
+                        <span class="bullet or green tick" id="ctl10_Progressbar_lblBullet_2">
+                          
+                            <a data-url="/Shipping" class="s_title last " id="ctl10_Progressbar_lblTitle_2"><span>Send Order Information</span><br/><span>Step two</span></a>
+                         
+                        </span>
+                        <span class="bullet pi green" id="ctl10_Progressbar_lblBullet_3">
+                            
+                            <a data-url="/Shipping" class="s_title last green" id="ctl10_Progressbar_lblTitle_2"><span>Method of receipt</span><br/><span>Step three</span></a>
+
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<div class="row">
+                        <div >
+                            
+                            <span class="label-price green" style="margin-bottom: 50px;">
+                              <h4>Keep in mind that the Send cost is added to the payment amount</h4> 
+                            </span>
+                        </div>
+
+
+</div>
+<div class="category-tab shop-details-tab" id="insertCommentForm">
+    <!--category-tab-->
+    <div class="tab-content">
+        @*<div class="tab-pane fade active in" id="reviews">*@
+        <div class="tab-pane  active in" id="reviews">
+            <div class="col-sm-12">
+                @using (Html.BeginForm("ReciptionMethod", "ShoppingCart", FormMethod.Post))
+                {
+                    @Html.HiddenFor(x => x.OrderID);
+
+                    foreach (var cat in der)
+                    {
+
+                        <div class="form-group">
+                            <label class=" btn btn-info">
+                                <div style="margin-right: 10px;float: right;">
+
+                                    <span style="margin-right: 10px" class="">@cat.EnReceptionMethodName</span>
+                                    @if (cat.ReciptionMethodId == 2)
+                                    {
+                                        @Html.RadioButton("ReciptionMethod", cat.EnReceptionMethodName, new { @name = "ReciptionMethod" })
+
+                                    }
+
+                                    else
+                                    {
+                                        @Html.RadioButton("ReciptionMethod", cat.EnReceptionMethodName, new { @name = "ReciptionMethod", @disabled = false })
+                                    }
+
+                                </div>
+                                <br />
+                                <div class="form-group" style="font-size: 15px">
+
+                                    <table>
+                                        <tr>
+                                            <td> @Html.DisplayNameFor(x => cat.Price)</td>
+                                            <td> = </td>
+                                            <td>
+                                                @Html.DisplayFor(x => cat.Price)
+
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+                                <br />
+                                <div>
+                                    <div style="margin-right: 10px">
+                                        @Html.DisplayFor(x => cat.ReceptionMethodText)
+                                    </div>
+                                </div>
+
+                            </label>
+
+                        </div>
+                    }
+                    <button name="sendComment" id="sendComment" type="submit" class="btn btn-default pull-left">
+                        Submit
+                    </button>
+                }
+
+
+            </div>
+        </div>
+
+    </div>
+</div>

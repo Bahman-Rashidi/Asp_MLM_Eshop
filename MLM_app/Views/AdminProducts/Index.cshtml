@@ -1,0 +1,99 @@
+﻿@model IEnumerable<MLM_app.Models.Product>
+
+@{
+    ViewBag.Title = "List of products";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<h2 class="title text-center">List of products</h2>
+<section id="cart_items">
+    <div class="container">
+        @Html.ActionLink("Submitt product", "Create", null, new { @class = "btn btn-primary" })
+        <p></p>
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed table-hover table-striped">
+                <thead>
+                    <tr class="cart_menu text-center">
+                        <td>
+                            @Html.DisplayNameFor(model => model.ProductGroups.ProductGroupTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.ProductStatus)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.ProductTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.Off)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.AvailableNumber)
+                        </td>
+                        @*<th>
+                                @Html.DisplayNameFor(model => model.ProductDescription)
+                            </th>*@
+                        <td>
+                            @Html.DisplayNameFor(model => model.ProductPrice)
+                        </td>
+                        @*<th>
+                                @Html.DisplayNameFor(model => model.ImageUrl)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ProductThumbnailImageUrl)
+                            </th>*@
+                        <td>Operation</td>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="5">No information available for display.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProductGroups.ProductGroupTitle)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProductStatus)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProductTitle)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Off)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AvailableNumber)
+                                </td>
+                                @*<td>
+                                        @Html.DisplayFor(modelItem => item.ProductDescription)
+                                    </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProductPrice)
+                                </td>
+                                @*<td>
+                                        @Html.DisplayFor(modelItem => item.ImageUrl)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ProductThumbnailImageUrl)
+                                    </td>*@
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |
+                                    @*@Html.ActionLink("Details", "Details", new { id = item.ProductID }) |*@
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.ProductID })
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

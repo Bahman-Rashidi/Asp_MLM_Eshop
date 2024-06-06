@@ -1,0 +1,28 @@
+﻿@{
+  Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/Content/payBank.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Return from Bank</title>
+
+</head>
+<body>
+    <fieldset>
+        <legend>Payment Result</legend>
+
+
+        <div class="bankBankPayLogo">
+            <img alt="" src="/Images/BM_Logo.png" />
+        </div>
+        <div>
+            @Html.Raw(ViewBag.message)
+            <img src="@Url.Content(ViewBag.Image)" />
+        </div>
+    </fieldset>
+</body>
+</html>

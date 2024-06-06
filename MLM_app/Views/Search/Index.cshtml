@@ -1,0 +1,50 @@
+﻿@model IEnumerable<MLM_app.Models.Product>
+@using MLM_app.Helpers
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<div class="col-sm-9">
+    <div class="features_items">
+        <!--features_items-->
+        <h2 class="title text-center">result of Search</h2>
+        @{Html.RenderPartial("_AlertPartial");}
+        @foreach (var item in Model)
+        {
+            <div class="col-sm-4" style="float: right;">
+                <div class="product-image-wrapper">
+                    <div class="single-products">
+                        <div class="productinfo text-center">
+                            <img class="appendimg" src="@Url.Content(item.ProductThumbnailImageUrl)" alt="@item.ProductTitle" />
+                            <h2>@Html.OffProduct(item.Off, item.ProductPrice)</h2>
+                            <p>@item.ProductTitle</p>
+
+                            <a id="btnAddToBasket_@item.ProductID" href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
+                        </div>
+                        <div class="product-overlay">
+                            <div class="overlay-content">
+                                <h2>
+                                    @Html.OffProduct(item.Off, item.ProductPrice)
+                                    @*@item.ProductPrice.ToString("#,0 $")*@
+                                </h2>
+                                <p>@item.ProductTitle</p>
+                                <a id="btnAddToBasket_@item.ProductID" href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="choose">
+                        <ul class="nav nav-pills nav-justified">
+                            <li><a href="@Url.Action("ProductDetails", "AdminProducts", new {id=item.ProductID},null)"><i class="fa fa-list"></i>Product Details</a></li>
+                            <li>
+                                <a href="#" class="more"><i class="fa fa-plus-square"></i>Compare</a>
+                                <b class="ProdId hidden">@item.ProductID</b>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+    </div><!--features_items-->
+</div>

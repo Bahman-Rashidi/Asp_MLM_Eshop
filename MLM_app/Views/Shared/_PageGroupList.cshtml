@@ -1,0 +1,11 @@
+﻿@using MLM_app.Models
+
+@{
+    var db = new ApplicationDbContext();
+}
+
+
+@foreach (var item in db.PageGroups)
+{
+    <li>@Html.ActionLink(item.PageGroupTitle, "ShowByGroup", "AdminPages", new { id = item.PageGroupId }, null)</li>
+}

@@ -1,0 +1,55 @@
+﻿@using MLM_app.Models
+@model IEnumerable<MLM_app.Models.ReciptionMethod>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+
+<h2 class="title text-center">Managing Delivery Methods</h2>
+<section id="cart_items">
+    <div class="container">
+        <div class="btn btn-info">
+        @Html.ActionLink("add ", "Create", new { @class = "" })
+</div>
+        <div class="table-responsive cart_info">
+            
+
+            <table class="table table-condensed">
+                <thead>
+                    <tr class="cart_menu">
+                        <td>Code</td>
+                        <td>Title</td>
+                        <td>Price</td>
+                        <td>Details</td>
+                        <td>Delete</td>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                  
+                    @foreach (var item in Model)
+                    {
+
+                 
+
+                        <tr>
+                            <td>@item.ReciptionMethodId</td>
+                            <td>@item.EnReceptionMethodName</td>
+                            <td>@item.Price</td>
+                          
+                      
+                            <td>@Html.ActionLink("Details", "Details", new { id = @item.ReciptionMethodId }, new { @class = "" })</td>
+
+                            <td>@Html.ActionLink("Delete", "DeleteM", new { id = @item.ReciptionMethodId }, new { @class = "" })</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+         
+        </div>
+    </div>
+</section> 

@@ -1,0 +1,68 @@
+﻿@using MLM_app.Models
+@using MLM_app.Helpers
+
+@model IEnumerable<ApplicationRole>
+@{
+    ViewBag.Title = "List of Roles";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<h2 class="title text-center"> Roles</h2>
+
+<section id="cart_items">
+    <div class="container">
+        @Html.ActionLink("Create Role", "Create", null, new { @class = "btn btn-primary" })
+        <p></p>
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr class="cart_menu text-center">
+                        <td>Role Name</td>
+                        <td>Users</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center">There is no information to display</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (ApplicationRole role in Model)
+                        {
+                            <tr>
+
+                                <td>@role.Name</td>
+                                <td>
+                                    @if (role.Users == null || role.Users.Count == 0)
+                                    {
+                                        @: There are no users in this role
+                                    }
+                                    else
+                                    {
+                                        <p>
+                                            @string.Join(",", role.Users.Select(x => Html.GetUserName(x.UserId)))
+                                        </p>
+                                    }
+                                </td>
+                                <td>
+                                    @using (Html.BeginForm("Delete", "AdminRoles", new { id = role.Id }))
+                                    {
+                                        @Html.ActionLink("Edit", "Edit", new { id = role.Id })
+                                        <button class="btn btn-danger btn-xs" type="submit">
+                                            Delete
+                                        </button>
+                                        @Html.ActionLink("Edit Role", "EditRole", new { id = role.Id })
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

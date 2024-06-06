@@ -1,0 +1,198 @@
+﻿@using MLM_app.Helpers
+
+
+@model PagedList.IPagedList<MLM_app.Models.PeriodOfProfit>
+@{
+    ViewBag.Title = "Shopping cart";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<h2 class="title text-center">@ViewBag.Title</h2>
+<section id="cart_items">
+    <div class="container">
+        @Html.ActionLink("Submit New Period", "AddPeriod", null, new { @class = "btn btn-primary" })
+        <p></p>
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed" style="font-family: tahoma">
+                <thead>
+                    <tr class="cart_menu">
+                        <td>Code</td>
+                        <td>Start Date</td>
+                        <td>End Date</td>
+                        <td>Processing Status</td>
+                        <td>Current Status</td>
+                        <td>Operation</td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+
+
+                        <tr>
+                            <td>@item.ID</td>
+                            <td>@item.StartDate</td>
+                            <td>@item.EndDate</td>
+                            <td>
+                                @if (item.IsCurrentPeriod)
+                                {
+                                    <span>Current Course</span>
+                                }
+                                else
+                                {
+                                    <span>Previous or Next Course</span>
+                                }
+                            </td>
+
+                            <td>
+                                @if (item.IsCalculated)
+                                {
+                                    <span>Processed</span>
+                                }
+                                else
+                                {
+                                    <span>Not Processed</span>
+                                }
+                            </td>
+
+
+                            <td>
+                                @if (!item.IsCalculated)
+                                {
+
+
+                                    @Html.ActionLink("Set Current Period", "SetCurrentPerid", new { id = item.ID })
+                                }
+
+
+
+                                @if (item.IsCurrentPeriod)
+                                {
+                                    <button class="btn btn-info peyment " data-periodid="@item.ID">
+                                        Profitability
+
+
+                                    </button>
+                                }
+
+
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</section>
+<br />
+<div class="pagination-container">
+    <div style="margin-left: 20px;">
+        page  @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)  from  @Model.PageCount
+    </div>
+</div>
+
+
+@Html.PagedListPager(Model, page => Url.Action("Orders", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+
+
+
+@section scripts
+{
+
+    <script>
+
+
+        $(document).ready(function() {
+
+           // $('#setCurrentPeriod').click(function() {});
+
+
+            $(".peyment").click(function(e) {
+
+                var target = e.target;
+                var periodid = $(target).data("periodid");
+
+                $("#Pleasewait").css("display", "block");
+
+                //ProcessPeriodProfit
+
+
+                var urla = '@Url.Action("ProcessPeriodProfit", "PeriodOfProfit")';
+                urla = urla + "/" + periodid;
+                debugger;
+                $.ajax({
+                    type: "GET",
+                    //  url: 'AdminReport/GetRefinaryReport',
+                    url: urla,
+
+                    //data: RefinaryViewModel,
+                    dataType: "json",
+                    success: function(resulta) {
+                        alert("  data  changed...");
+
+                        $(".peyment[data-periodid=" + periodid + "]").css("display", "none");
+                        debugger;
+                    }
+                });
+
+
+            });
+
+
+        });
+
+
+    </script>
+
+
+    <style>
+        .pagination-container {
+            float: left;
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+            margin: auto;
+        }
+
+        @@-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        .pagination-container {
+            float: left;
+        }
+
+        .peyment {
+        }
+    </style>
+}

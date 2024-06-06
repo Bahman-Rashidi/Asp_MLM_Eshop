@@ -1,0 +1,176 @@
+﻿@using MLM_app.Helpers
+@model MLM_app.Models.Product
+
+@{
+    ViewBag.Title = "Product Details";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+    //Layout = null;
+}
+
+<div class="col-sm-9 padding-left">
+    <div class="product-details">
+        <!--product-details-->
+        <div class="col-sm-5">
+            <div class="view-product">
+                <img width="300" height="381" src="@Url.Content(Model.ImageUrl)" alt="@Model.ProductTitle" />
+            </div>
+        </div>
+        <div class="col-sm-7">
+            <div class="product-information">
+                <!--/product-information-->
+                <h2>@Model.ProductGroups.ProductGroupTitle</h2>
+                <p>Model : @Model.ProductTitle</p>
+                <span>
+                    <span>@Html.OffProduct(Model.Off, Model.ProductPrice)</span>
+
+                    @*<button id="btnAddToBasket_@Model.ProductID" type="button" class="btn btn-default cart">
+                            <i class="fa fa-shopping-cart"></i>
+                            add
+                        </button>*@
+                    @if (@Model.AvailableNumber > 0)
+                    {
+                        <a id="btnAddToBasket_@Model.ProductID" href="#" class="btn btn-default cart"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
+                    }
+                    else
+                    {
+                        <h1>Finished</h1>
+                    }
+
+                </span>
+                <p><b>status :</b> Exist </p>
+                <p><b>brand :</b>@Model.ProductGroups.ProductGroupTitle</p>
+
+            </div><!--/product-information-->
+        </div>
+    </div><!--/product-details-->
+    <div class="btn btn-default cart">
+        <span>number of visits:</span>&nbsp;@Model.VisitCount
+    </div>
+    <div class="pull-left" id="LikeAndDisLike">
+        <span id="badgeLike" class="badge">@Model.Like</span>
+        <img id="btnLike" src="~/Images/like.png" />
+        <img id="btnDisLike" src="~/Images/dislike.png" />
+        <span id="badgeDisLike" class="badge">@Model.DisLike</span>
+    </div>
+
+    <div class="category-tab shop-details-tab">
+        <div class="col-sm-12">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#reviews" data-toggle="tab">Description</a></li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane  active in" id="reviews">
+                <div class="col-sm-12">
+                    <p>
+                        @Html.Raw(Model.ProductDescription)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (Model.CommentIsActive)
+    {
+
+        <div id="form-comment">
+            @{
+                //Html.RenderAction("InsertComment", "Comments", new { id = Model.ProductID });
+                Html.RenderAction("InsertComment", "Comments", new { productId = Model.ProductID, str = Model.KeyWords });
+
+            }
+
+        </div>
+
+        <div id="show-comment">
+            @{
+                Html.RenderAction("ShowComment", "Comments", new { productId = Model.ProductID, str = Model.KeyWords });
+            }
+        </div>
+                }
+</div>
+
+@if (!String.IsNullOrEmpty(ViewBag.info))
+{
+    <div id="info" style="position: fixed; bottom: 0; right: 0; margin-right: 1%;">
+
+        <div class="alert @ViewBag.color alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong> @ViewBag.info</strong>
+        </div>
+
+    </div>
+
+}
+@*@section scripts
+    {
+        <script language="javascript" type="text/javascript">
+            $(document).ready(function () {
+                $("[id*=btnAddToBasket]").each(function () {
+                    $(this).click(function () {
+                        var productid = $(this).attr("id").match(/[\d]+$/);
+                        $.ajax({
+                            url: "/api/ShoppingCartApi",
+                            data: { ProductID: productid },
+                            type: "GET"
+                        }).done(function (result) {
+                            if (result) {
+                                $("#cartinfo").fadeOut(200).html("number of items available in the shopping cart: " + "<span class='badge'>" + result + "</span>").fadeIn(200);
+                            } else {
+                            }
+                        });
+
+                    });
+                });
+            });
+        </script>
+    }*@
+
+@* To make jQuery code work, you need to write it inside a script section so that the jQuery library can recognize the jQuery syntax *@
+@section scripts
+        {
+    <script language="javascript" type="text/javascript">
+            $(document).ready(function () {
+                $("#btnLike").click(function () {
+
+                    var productId= @Model.ProductID;
+
+                    var like = {};
+                    like.url = "/AdminProducts/Like";
+                    like.type = "POST";
+                    like.data = JSON.stringify({ id: productId });
+                    like.datatype = "json";
+                    like.contentType = "application/json";
+                    like.success = function (result) {
+                        $("#badgeLike").fadeOut(200).html( result ).fadeIn(200);
+                    };
+                    like.error = function() {
+                        //alert("Error");
+                    };
+
+                    $.ajax(like);
+
+
+                });
+
+                $("#btnDisLike").click(function () {
+
+                    var productId= @Model.ProductID;
+
+                    var like = {};
+                    like.url = "/AdminProducts/DisLike";
+                    like.type = "POST";
+                    like.data = JSON.stringify({ id: productId });
+                    like.datatype = "json";
+                    like.contentType = "application/json";
+                    like.success = function (result) {
+                        $("#badgeDisLike").fadeOut(200).html( result ).fadeIn(200);
+                    };
+                    like.error = function() {
+                        //alert("Error");
+                    };
+
+                    $.ajax(like);
+                });
+            });
+    </script>
+}

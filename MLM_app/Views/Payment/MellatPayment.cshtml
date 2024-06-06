@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+@* Page Style *@
+<link href="~/Content/payBank.css" rel="stylesheet" />
+<div class="row">
+    @* This element is an empty object that a JavaScript function uses to create a form for posting information to the bank and places it in this object *@
+    <div id="bankform"></div>
+
+    @* This function creates a form and sends the information using the POST method *@
+    <script language="javascript" type="text/javascript">
+    function postRefId(refIdValue) {
+        var form = document.createElement("form");
+        form.setAttribute("method", "POST");
+        form.setAttribute("action", "@System.Configuration.ConfigurationManager.AppSettings["PgwSite"]");
+        form.setAttribute("target", "_self");
+        var hiddenField = document.createElement("input");
+        hiddenField.setAttribute("name", "RefId");
+        hiddenField.setAttribute("value", refIdValue);
+        form.appendChild(hiddenField);
+        document.getElementById("bankform").appendChild(form);
+        form.submit();
+        document.getElementById("bankform").removeChild(form);
+    }
+    </script>
+    @* This code calls the above JavaScript function *@
+    @Html.Raw(ViewBag.jscode)
+
+    @* The / symbol means the path to which the form will be sent.
+        You can specify a different path for posting the page's information, for example:
+        <form action="/add-payment" ....>
+        When the / symbol is used alone, it means the information will be sent to the same page *@
+
+    @using (Html.BeginForm("BankPayPayment", "Payment", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <fieldset>
+                <legend>Payment</legend>
+
+                @*<div class="bankBankPayLogo"  style="display:none">
+                    <img alt="" src="/Images/BM_Logo.png" />
+                </div>*@
+                <div>
+                    <input name="price" type="hidden" value="@ViewBag.Price" />
+                    <input name="id" type="hidden" value="@ViewBag.Id" />
+                </div>
+                <div>
+                    <span>Payment amount</span>
+                    <span>@ViewBag.Price</span>
+                    <span>$</span>
+                </div>
+                <div>
+                    <br />
+                    <input type="submit" value="Connecting to the bank and payment" font-bold="True" height="40" />
+                    @Html.ActionLink("Cancel", "Index", "Home")
+                    <h2>@Html.Raw(ViewBag.message)</h2>
+
+                </div>
+            </fieldset>
+        </div>
+    }
+
+
+    </div>

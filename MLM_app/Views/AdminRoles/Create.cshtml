@@ -1,0 +1,35 @@
+﻿@model string
+@{
+    ViewBag.Title = "Create Role";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<section class="panel">
+    <header class="panel-heading">
+       <h2 class="title text-center">Create Role</h2>
+    </header>
+    <div class="panel-body">
+        @Html.ValidationSummary(false)
+        @using (Html.BeginForm("Create", "AdminRoles", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label class="control-label col-md-2">Name</label>
+                <div class="col-md-4">
+                    <input name="name" value="@Model" class="form-control" />
+                </div>
+            </div>
+            <div id="buttons">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-4">
+                    <input type="submit" class="btn btn-primary" value="Submit" />
+                    @Html.ActionLink("Back to the menu", "Index")
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+
+

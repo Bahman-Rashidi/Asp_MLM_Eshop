@@ -1,0 +1,289 @@
+﻿@model MLM_app.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Submit Name";
+@*   Layout = "~/Views/Shared/_LayoutMLM.cshtml";*@
+
+  Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+
+}
+@section scripts
+{
+    
+    <style>
+        /*Now the CSS*/
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .tree ul {
+            padding-top: 20px;
+            position: relative;
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+        }
+
+        .tree li {
+            float: left;
+            text-align: center;
+            list-style-type: none;
+            position: relative;
+            padding: 20px 5px 0 5px;
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+        }
+
+        /*We will use ::before and ::after to draw the connectors*/
+
+        .tree li::before, .tree li::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 50%;
+            border-top: 1px solid #ccc;
+            width: 50%;
+            height: 20px;
+        }
+
+        .tree li::after {
+            right: auto;
+            left: 50%;
+            border-left: 1px solid #ccc;
+        }
+
+        /*We need to remove left-right connectors from elements without 
+any siblings*/
+        .tree li:only-child::after, .tree li:only-child::before {
+            display: none;
+        }
+
+        /*Remove space from the top of single children*/
+        .tree li:only-child {
+            padding-top: 0;
+        }
+
+        /*Remove left connector from first child and 
+right connector from last child*/
+        .tree li:first-child::before, .tree li:last-child::after {
+            border: 0 none;
+        }
+        /*Adding back the vertical connector to the last nodes*/
+        .tree li:last-child::before {
+            border-right: 1px solid #ccc;
+            border-radius: 0 5px 0 0;
+            -webkit-border-radius: 0 5px 0 0;
+            -moz-border-radius: 0 5px 0 0;
+        }
+
+        .tree li:first-child::after {
+            border-radius: 5px 0 0 0;
+            -webkit-border-radius: 5px 0 0 0;
+            -moz-border-radius: 5px 0 0 0;
+        }
+
+        /*Time to add downward connectors from parents*/
+        .tree ul ul::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            border-left: 1px solid #ccc;
+            width: 0;
+            height: 20px;
+        }
+
+        .tree li a {
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            text-decoration: none;
+            color: #666;
+            font-family: arial, verdana, tahoma;
+            font-size: 11px;
+            display: inline-block;
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+        }
+
+        /*Time for some hover effects*/
+        /*We will apply the hover effect the the lineage of the element also*/
+        .tree li a:hover, .tree li a:hover + ul li a {
+            background: #c8e4f8;
+            color: #000;
+            border: 1px solid #94a0b4;
+        }
+        /*Connector styles on hover*/
+        .tree li a:hover + ul li::after,
+        .tree li a:hover + ul li::before,
+        .tree li a:hover + ul::before,
+        .tree li a:hover + ul ul::before {
+            border-color: #94a0b4;
+        }
+
+    /*Thats all. I hope you enjoyed it.
+Thanks :)*/
+    </style>
+
+    <script>
+
+
+        $(document).ready(function() {
+            $('body').on('click', '#root a', function(evt) {
+
+                debugger;
+                var userid = $(evt.target).data("userid");
+                var loadedUser = $(evt.target).data("userloade");
+                if (loadedUser == "f") {
+
+                    $(evt.target).data("userloade", "t");
+                    var urls = '/Account/GetOrganChartUsers' + "?Userid=" + userid;
+                    $.ajax({
+                        type: "GET",
+                        url: urls,
+                        dataType: "json",
+                        success: function(result1) {
+                          
+
+                            if (result1.length < 1) {
+                                return;
+
+                            }
+                            var parentId = result1[0].ParentUserId;
+                            //$('*[data-customerID="22"]');
+
+                            var tempayeHtml = "<ul>";
+                            for (var j = 0; j < result1.length; j++) {
+                                tempayeHtml = tempayeHtml + "<li>";
+                            
+                                //$(parentId).append(" <a href=\"#\"  data-userid=" + result[j].UserId + "  data-userloade=\"f\"  >" + result[j].Persianame + " </a>");
+                                if (result1[j].IsPurchased) {
+                                   // alert('');
+                                    //debugger;
+                                    tempayeHtml = tempayeHtml + " <a href=\"#\" style=\"color:green;font-family: tahoma;font-size: 13px;\"  data-userid=" + result1[j].UserId + "  data-userloade=\"f\"  >" + result1[j].EnglishName + " </a>";
+
+                                } else {
+                                    
+                                    tempayeHtml = tempayeHtml + " <a style=\"color:red;font-family: tahoma;font-size: 13px;\" href=\"#\"  data-userid=" + result1[j].UserId + "  data-userloade=\"f\"  >" + result1[j].EnglishName + " </a>";
+
+                                }
+                               // tempayeHtml = tempayeHtml + " <a href=\"#\"  data-userid=" + result1[j].UserId + "  data-userloade=\"f\"  >" + result1[j].Persianame + " </a>";
+                                tempayeHtml = tempayeHtml + "</li>";
+                            }
+
+                            tempayeHtml = tempayeHtml + "</ul>";
+                       
+                            $('*[data-userid=' + parentId + ']').parent().append(tempayeHtml);
+                        }
+
+                    });
+
+
+                }
+                if (loadedUser == "t") {
+
+                    //alert(userid);
+
+                }
+
+            });
+            //GetOrganChartUsers
+
+            $.ajax(
+            {
+                type: "GET",
+                url: '/Account/GetOrganChartUsers',
+                // data: datas,
+                dataType: "json",
+                success: function(result) {
+
+
+                    debugger;
+
+                    for (var i = 0; i < result.length; i++) {
+                        $("#root").append(" <a href=\"#\"  data-userid=" + result[0].UserId + "  data-userloade=\"f\"  >" + result[i].EnglishName + " </a>");
+
+
+                    }
+
+
+                    //$("#root a").click(function(evt) {
+
+                    //    debugger;
+                    //    var userid = $(evt.target).data("userid");
+                    //    var loadedUser = $(evt.target).data("userloade");
+                    //    if (loadedUser == "f") {
+
+                    //        $(evt.target).data("userloade", "t");
+                    //        var urls = '/Account/GetOrganChartUsers' + "?Userid=" + userid;
+                    //        $.ajax({
+                    //            type: "GET",
+                    //            url: urls,
+                    //            dataType: "json",
+                    //            success: function(result1) {
+                    //                debugger;
+
+                    //                if (result1.length < 1) {
+                    //                    return;
+
+                    //                }
+                    //                var parentId = result1[0].ParentUserId;
+                    //                //$('*[data-customerID="22"]');
+
+                    //                var tempayeHtml = "<ul>";
+                    //                for (var j = 0; j < result1.length; j++) {
+                    //                    tempayeHtml = tempayeHtml + "<li>";
+                    //                    //$(parentId).append(" <a href=\"#\"  data-userid=" + result[j].UserId + "  data-userloade=\"f\"  >" + result[j].Persianame + " </a>");
+                    //                    tempayeHtml = tempayeHtml + " <a href=\"#\"  data-userid=" + result1[j].UserId + "  data-userloade=\"f\"  >" + result1[j].Persianame + " </a>";
+                    //                    tempayeHtml = tempayeHtml + "</li>";
+                    //                }
+
+                    //                tempayeHtml = tempayeHtml + "</ul>";
+                    //                debugger;
+                    //                $('*[data-userid=' + parentId + ']').parent().append(tempayeHtml);
+                    //            }
+
+                    //        });
+
+
+                    //    }
+                    //    if (loadedUser == "t") {
+
+                    //        alert(userid);
+
+                    //    }
+
+
+                    //});
+                    //  bindeClick();
+
+                }
+
+
+            });
+
+
+            function bindeClick() {
+
+
+            }
+
+        });
+
+
+    </script>
+
+
+}
+
+    <div class="tree" >
+        <ul style="text-align: center">
+            <li  id="root" style="text-align: center">
+             
+        </ul>
+    </div>
+

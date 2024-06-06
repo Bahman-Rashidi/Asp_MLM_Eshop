@@ -1,0 +1,30 @@
+﻿@model IEnumerable<MLM_app.Models.Page>
+@{
+    ViewBag.Title = "News List";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<div class="col-sm-9">
+    <div class="blog-post-area">
+        <h2 class="title text-center">List of latest news</h2>
+        @foreach (var item in Model)
+        {
+            <div class="single-blog-post" style="border:1px solid #F7F7F0;padding:8px;">
+                <h3>@item.PageTitle</h3>
+                <div class="post-meta" >
+                    <ul style="float:left">
+                        <li><i class="fa fa-user"></i>@item.ApplicationUser.EnglishName</li>
+                        <li><i class="fa fa-clock-o"></i> @item.PageDate.ToShortTimeString()</li>
+                        <li><i class="fa fa-calendar"></i>@item.PageDate.ToString("yyyy/MM/dd")</li>
+                    </ul>
+                </div>
+
+                <p>@item.PageSummary</p>
+                <a class="btn btn-primary" href="/page/@item.PageId/@item.PageTitle">
+                    <i class="fa fa-list"></i>Continuation
+                </a>
+            </div>
+            <h4></h4>
+        }
+    </div>
+</div>

@@ -1,0 +1,149 @@
+﻿@using MLM_app.Helpers
+
+@model PagedList.IPagedList<MLM_app.Models.OrderDetail>
+@{
+    ViewBag.Title = "Order Details";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<h2 class="title text-center">Order Details</h2>
+<section id="cart_items">
+    <div class="container">
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr class="cart_menu text-center">
+                        <td>Name</td>
+                        <td>Buyer Details</td>
+                        <td>Payment Number</td>
+                        <td>Payment Status</td>
+                        <td>Product Name</td>
+                        <td>Quantity</td>
+                        <td>Price</td>
+                        <td>Total Sum</td>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="7">No information available for display.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Orders.ApplicationUser.EnglishName</td>
+
+ <td><a href="#" class="userInfo" target="_blank">@item.Orders.ApplicationUser.Email</a></td>
+                                <td>@item.OrderID</td>
+                                <td>
+                                    @if (item.Orders.IsFinalized)
+                                    {
+                                        @: Paid
+                                    }
+                                    else
+                                    {
+                                        @: Not Paid
+                                    }
+                                </td>
+                                <td>@item.Products.ProductTitle</td>
+                                <td>@item.OrderedCount</td>
+                                <td>@item.Price</td>
+                                <td>@Html.TotalPrice(item.OrderedCount, item.Price)</td>
+                                <td>
+                                    @*<a href="#" id="del_@item.OrderID">Delete</a>*@
+                                    @*@using (Html.BeginForm("Delete", "AdminOrders", new { id = item.OrderID }))
+                                        {
+                                            <button class="btn btn-danger btn-xs" type="submit">
+                                                Delete
+                                            </button>
+                                        }*@
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<div style="display: none">
+    <div id="userInfoDiv">
+        
+        <table>
+            <tr><td></td><td>Name</td></tr>
+            <tr><td></td><td>Number</td></tr>
+        </table>
+        
+    </div>
+</div>
+
+<br />
+<div class="pagination-container">
+    <div style="margin-left: 20px;">
+        page  @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)  from  @Model.PageCount
+    </div>
+</div>
+
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+@section Scripts
+{
+    
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".userInfo").hover(function () {
+
+             //   $(".userInfo").popover('hide');
+
+                    debugger;
+                var el = $(this);
+                el.popover(
+                                       {
+
+                                           html: true,
+                                           placement: 'left',
+                                           content: function () {
+                                               return $('#userInfoDiv').html();
+                                           }
+
+                                       }
+
+                                        );
+                el.popover('show');
+
+
+                }
+            );
+
+
+            $("[id*=del]").each(function() {
+                $(this).click(function() {
+                    var orderid = $(this).attr("id").match(/[\d]+$/);
+                    $.getJSON('@Url.Action("DeleteConfirmed", "AdminOrders")?id=' + orderid, function(data) {
+                        if (data.result) {
+                        } else {
+                        }
+                    });
+
+                });
+            });
+
+        });
+    </script>
+
+    <style type="text/css">
+
+        .userInfo {
+
+
+        }
+    </style>
+
+
+}
+

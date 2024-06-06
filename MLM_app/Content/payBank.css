@@ -1,0 +1,22 @@
+﻿
+body {
+    /*direction: rtl;*/
+    font-size: 20px;
+  /*  width: 500px;*/
+    margin-left: auto;
+    margin-right: auto;
+       
+}
+.bankBankPayLogo {
+    text-align: center;
+}
+fieldset {
+    width: 500px;
+    background-color: #ebebeb;
+    border-radius: 10px;
+    -ms-border-radius: 10px;
+    -moz-border-radius: 10px;    
+}
+legend {
+    text-align: center;
+}

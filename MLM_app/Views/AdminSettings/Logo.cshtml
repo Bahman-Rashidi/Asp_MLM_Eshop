@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Logo";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<h2 class="title text-center">Website Logo</h2>
+@{ Html.RenderPartial("_AlertPartial");}
+<img src="@Url.Content("~/Images/logo.png")" class="img-responsive thumbnail" />
+@using (Html.BeginForm("Logo", "AdminSettings", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-12">
+            <span>Choose Image</span>
+            <span><i class="fa fa-undo"></i> Change Image</span>
+            <input id="Picture" name="Picture" type="file" class="btn btn-default" />
+        </div>
+    </div>
+    <input type="submit" value="Submit" class="btn btn-success" />
+}
+

@@ -1,0 +1,23 @@
+﻿To: @ViewBag.To
+From:  <info@Radamin.com>
+    Subject: @ViewBag.Message
+
+    @{ Layout = null; /* Overrides the Layout set for regular page views. */ }
+
+    <div style="text-align: center">
+        @Html.EmbedImage("~/images/logo.png")
+    </div>
+    <div style="font-family: Tahoma;text-align: right;direction: rtl;font-size: 70%;">
+        Sender's name : @ViewBag.Name
+        <div style="font-weight: bold">
+            Sender's Email: @ViewBag.email
+
+        </div>
+
+        <br />
+        @ViewBag.Message
+        <br />
+        <div style="text-align: center;font-weight: bold;text-decoration:none">
+
+        </div>
+    </div>

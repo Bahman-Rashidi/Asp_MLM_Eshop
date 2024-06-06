@@ -1,0 +1,60 @@
+﻿@using MLM_app.Models
+@using Microsoft.AspNet.Identity
+@model MLM_app.Models.ApplicationUser
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+var context = new ApplicationDbContext();
+//var allUsers = context.Users.ToList();
+var allRoles = context.Roles.ToList();
+
+
+
+
+}
+@section scripts
+{
+    
+ 
+
+
+
+}
+
+
+
+
+
+<h2 class="title text-center">Edit User </h2>
+
+<div class="form-group">
+    <label>User Name</label>
+    <p class="form-control-static">@Model.UserName</p>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(false)
+        @Html.HiddenFor(x => x.Id)
+        <div class="form-group">
+            <label>Email</label>
+            @Html.EditorFor(x => x.Email, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>Email Active</label>
+            @Html.EditorFor(x => x.EmailConfirmed, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input name="password" type="password" class="form-control" />
+        </div>
+
+        <div class="form-group" id="buttons">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit" class="btn btn-default" />
+                @Html.ActionLink("Back to the menu", "Index")
+            </div>
+        </div>
+    </div>
+}

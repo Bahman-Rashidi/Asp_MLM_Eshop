@@ -1,0 +1,122 @@
+﻿@model MLM_app.Models.Slider
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutShora.cshtml";
+}
+
+@section Meta
+{
+
+    <title>&#x202b; @ViewBag.Titlea</title>
+
+    @if (ViewBag.Titlea != null)
+    {
+
+
+        <title>&#x202b; @ViewBag.Titlea</title>
+
+    }
+    @if (ViewBag.Description != null)
+    {
+        <meta name="description" content="@ViewBag.Description" />
+    }
+    @if (ViewBag.Keywords != null)
+    {
+        <meta name="keywords" content="@ViewBag.Keywords" />
+    }
+
+
+}
+
+<div class="col-sm-9">
+    <div class="blog-post-area">
+        <h2 class="title text-center">News Details</h2>
+        <div class="single-blog-post">
+            <h3>@Model.Title</h3>
+            <div class="media-body">
+                <ul class="sinlge-post-meta" style="display: inline-block; margin-left: -90px; ">
+                    <li><i class="fa fa-user"></i> @Model.ApplicationUser.EnglishName</li>
+                    <li><i class="fa fa-clock-o"></i>@Model.InsertDateTime.ToShortTimeString()</li>
+                    <li><i class="fa fa-calendar"></i>@Model.InsertDateTime.ToString("yyyy/MM/dd")</li>
+                </ul>
+
+            </div>
+            <p>
+                @Html.Raw(Model.PageText)
+            </p>
+
+        </div>
+    </div>
+
+    @if (Model.CommentIsActive)
+    {
+
+
+
+        <div id="show-comment">
+            @{
+                //Html.RenderAction("ShowComment", "Comments", new { SliderId = Model.SliderId });
+                Html.RenderAction("InsertComment", "Comments", new { SliderId = Model.SliderId });
+
+            }
+        </div>
+
+        <div id="form-comment">
+            @{
+                //Html.RenderAction("InsertComment", "Comments", new { SliderId = Model.SliderId });
+                Html.RenderAction("ShowComment", "Comments", new { SliderId = Model.SliderId });
+
+            }
+
+        </div>
+                }
+</div>
+@section scripts
+        {
+    <script language="javascript" type="text/javascript">
+            $(document).ready(function () {
+                $("#btnLike").click(function () {
+
+                    var productId = @Model.SliderId ;
+
+                    var like = {};
+                    like.url = "/AdminProducts/Like";
+                    like.type = "POST";
+                    like.data = JSON.stringify({ id: productId });
+                    like.datatype = "json";
+                    like.contentType = "application/json";
+                    like.success = function (result) {
+                        $("#badgeLike").fadeOut(200).html( result ).fadeIn(200);
+                    };
+                    like.error = function() {
+                        //alert("Error");
+                    };
+
+                    $.ajax(like);
+
+
+                });
+
+                $("#btnDisLike").click(function () {
+
+                    var productId= @Model.SliderId;
+
+                    var like = {};
+                    like.url = "/AdminProducts/DisLike";
+                    like.type = "POST";
+                    like.data = JSON.stringify({ id: productId });
+                    like.datatype = "json";
+                    like.contentType = "application/json";
+                    like.success = function (result) {
+                        $("#badgeDisLike").fadeOut(200).html( result ).fadeIn(200);
+                    };
+                    like.error = function() {
+                        //alert("Error");
+                    };
+
+                    $.ajax(like);
+                });
+            });
+    </script>
+}

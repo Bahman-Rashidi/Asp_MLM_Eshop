@@ -1,0 +1,76 @@
+﻿@using MLM_app.Helpers
+@using MLM_app.Models;
+@using Microsoft.AspNet.Identity
+
+@model PagedList.IPagedList<MLM_app.Models.ApplicationUser>
+@{
+    ViewBag.Title = "Users without Sub user password";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+@{
+    var db = new ApplicationDbContext();
+    string userId = User.Identity.GetUserId();
+}
+<h2 class="title text-center">"Users without sub user passwords"</h2>
+
+<section id="cart_items">
+    <div class="container">
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr class="cart_menu text-center">
+                        <td>Email</td>
+                        <td>Submission date</td>
+                        <td>User name</td>
+                        <td>Phone Number</td>
+                       <td>  Operation</td>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @if (Model.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="4">You have no users</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Email</td>
+                                <td>@item.DateOfRegistration</td>
+                                <td>@item.EnglishName</td>
+                                <td>@item.PhoneNumber</td>
+                                <td>                                    
+                                @Html.ActionLink("Login again", "ChangeConfimEmail","UserManage", new { id = @item.Id }, new { @class = "btn btn-success xs" })                                                                     
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<br />
+<div class="pagination-container">
+    <div style="margin-left: 20px;">
+        page  @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)  from   @Model.PageCount
+    </div>
+</div>
+
+
+@Html.PagedListPager(Model, page => Url.Action("Orders", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+@section scripts
+{
+    
+    <style>
+        .pagination-container
+        {
+            float: left;
+        }
+    </style>
+}

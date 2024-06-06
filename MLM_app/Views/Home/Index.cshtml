@@ -1,0 +1,513 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@section scripts
+{
+    <style>
+
+.gl-end-dl {
+
+    background: rgba(0, 0, 0, 0) url("/Images/endl3.png?345") no-repeat scroll 0 0;
+
+    height: 220px;
+}
+        .logo { }
+        .well-sm {
+            padding: 9px;
+            border-radius: 0px;
+            background-color: #ffffff;
+        }
+        .account {
+            float: right;
+            margin-top: 0px;
+        }
+
+        .gold {
+            color:#ffba00;
+        }
+
+
+
+        .feature { 
+            padding:20px;
+            margin-top:20px;
+            background-color:#fff;
+        }
+
+        .feature:hover {
+            background-color: #124f80;
+            -webkit-transition: all 0.2s linear;
+            -moz-transition: all 0.2s linear;
+            -o-transition: all 0.2s linear;
+            -ms-transition: all 0.2s linear;
+            transition: all 0.2s linear;
+            box-shadow: 0px 0px 5px #ccc;
+            color:#fff;
+        }
+
+        .feature:hover img{
+            -webkit-transition: all 0.7s linear;
+            -webkit-transform: rotate(6.28rad);
+            transition: all 0.7s;
+            transform: rorate(6.28rad);
+        }
+
+        .topbasketbutton {
+            -webkit-border-bottom-right-radius: 5px;
+            -webkit-border-bottom-left-radius: 5px; 
+            -moz-border-radius-bottomright: 5px; 
+            -moz-border-radius-bottomleft: 5px; 
+            border-bottom-right-radius: 5px; 
+            border-bottom-left-radius: 5px; 
+            padding: 10px 10px 10px 10px;
+            margin-bottom:5px;
+            display: block;
+            border:0px;
+            float: left;
+            margin-right:5px;
+            overflow: hidden;
+        }
+
+        .topbasketbutton:hover {
+            -webkit-border-bottom-right-radius: 5px; 
+            -webkit-border-bottom-left-radius: 5px; 
+            -moz-border-radius-bottomright: 5px;
+            -moz-border-radius-bottomleft: 5px; 
+            border-bottom-right-radius: 5px;
+            border-bottom-left-radius: 5px;
+            padding: 15px 10px 10px 10px;
+            margin-bottom:0px;
+            display: block;
+            border:0px;
+            float: left;
+            margin-right:5px;
+            overflow: hidden;
+        }
+
+
+        .basket {
+            float: right;
+            margin-top: 10px;
+            clear: both;
+            padding:10px;
+            border:1px solid #cccccc;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+        }
+        .strike {
+            text-decoration:line-through;
+        }
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 1.428571429;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 0px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+        }
+        .btnsearch {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 1.428571429;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            background-image: none;
+            border: 1px solid transparent;
+            -webkit-border-top-right-radius: 3px;
+            -webkit-border-bottom-right-radius: 3px;
+            -moz-border-radius-topright: 3px;
+            -moz-border-radius-bottomright: 3px;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+            color: #ffffff;
+            cursor: default;
+            background-color: #124f80;
+            border: 1px solid #124f80;
+            border-bottom-color: transparent;
+        }
+        .nav-tabs {
+            border-bottom: 1px solid #124f80;
+        }
+        .nav-tabs > li > a:hover {
+            border-color: #124f80 #124f80 #124f80;
+        }
+        .nav-tabs > li > a {
+            margin-right: 2px;
+            line-height: 1.428571429;
+            border: 1px solid transparent;
+            border-radius: 0 0 0 0;
+            background-color: #1870b7;
+            margin-bottom: 1px;
+            color:#fff;
+        }
+        .nav-tabs > li > a:hover {
+            margin-right: 2px;
+            line-height: 1.428571429;
+            border: 1px solid transparent;
+            border-radius: 0 0 0 0;
+            background-color: #124f80;
+            margin-bottom: 1px;
+            color: #ffffff;
+        }
+        .darkgreen {
+            background-color: #124f80;
+        }
+        .carousel-control.left {
+            background-image: none;
+            background-repeat: repeat-x;
+        }
+        .carousel-control.right {
+            background-image: none;
+            background-repeat: repeat-x;
+        }
+        .topbuttons {
+            list-style: none;
+            padding: 0px;
+            margin: 0px;
+            text-align: left;
+        }
+        .breadcrumb > li > a {
+            color: #ffffff;
+        }
+        .breadcrumb > .active {
+            color: #ffffff;
+            font-weight: bold;
+        }
+        .breadcrumb {
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            list-style: none;
+            background-color: #1870b7;
+            border-radius: 0px;
+        }
+        .carousel-inner > .item > img {
+            margin: 0 auto;
+        }
+        .topbutton {
+            padding: 10px 30px 20px 30px;
+            background-color: #999999;
+            display: block;
+            float: left;
+            overflow: hidden;
+        }
+        .topbuttons li {
+            height: 100%;
+            min-height: 100%;
+            display: inline;
+        }
+        .navbar {
+            border-radius: 0px;
+            background-color: #124f80;
+        }
+        .navbar {
+            position: relative;
+            min-height: 50px;
+            margin-bottom: 0px;
+            border: 0px solid transparent;
+            background-color: #124f80;
+        }
+        .navbar-default .navbar-nav>li>a {
+            color: #fff;
+        }
+        .navbar-default .navbar-nav>li>a:hover {
+            color: #fff;
+            border-bottom:5px solid #248ce1;
+            margin-bottom:-5px;
+            padding-bottom:5px;
+        }
+        .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+            color: #fff;
+            border-bottom:5px solid #248ce1;
+            margin-bottom:-5px;
+            padding-bottom:5px;
+		
+        }
+        .effect2
+        {
+            position: relative;
+        }
+
+        .submenu > a {
+            margin-left:30px;
+            font-size:.9em;
+            color:#444444;
+        }
+	
+        .submenu > a:hover  {
+            padding-left:11px;
+            border-left:4px solid #1870b7;
+        }
+
+        .sliderback {
+            background: url(../img/sliderback.jpg) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            margin-bottom: 20px;
+        }
+        .bottomback {
+            background: url(../img/sliderback.jpg) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            margin-bottom: 20px;
+            height: 30px;
+        }
+        .bottomfooter {
+            background-color: #101010;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            margin-bottom: 0px;
+            margin-top: 20px;
+            color: #ffffff;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+            color: #fff;
+            background-color: #124f80;
+        }
+        .nav-pills>li>a {
+            border-radius: 0px;
+        }
+        a {
+            color: #555555;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #000;
+            text-decoration: none;
+        }
+        .active2 {
+            border-right: 4px solid #1870b7;
+        }
+
+        .caption {
+            position:absolute;
+            top:0;
+            right:0;
+            background:rgba(24, 112, 183, 0.75);
+            width:100%;
+            height:100%;
+            padding:10%;
+            display: none;
+            text-align:center;
+            color:#fff;
+            z-index:2;
+        }
+
+        .caption > h4 {
+            font-size:1.4em;
+            font-weight:bold;
+            color:#fff !important;
+        }
+
+        .captionsmall {
+            font-size:1.0em;
+            line-height:1.0em;
+	
+        }
+
+        .captionprice {
+            font-size:1.4em;
+
+        }
+
+        .nav-stacked>li+li {
+            margin-top: 0px;
+            margin-left: 0;
+            border-bottom: 1px solid #dadada;
+            border-left: 1px solid #dadada;
+            border-right: 1px solid #dadada;
+        }
+        h1, h2, h3 {
+            margin-top: 0px;
+            margin-bottom: 10px;
+        }
+        .price {
+            margin: 10px 0 10px 0;
+            font-size: 1.7em;
+        }
+        .smallprice {
+            font-size: 0.8em;
+            color: #adadad;
+        }
+        .margintop10 {
+            margin-top: 10px;
+        }
+        .margintop20 {
+            margin-top: 20px;
+        }
+        .tabcontent {
+            padding: 10px;
+        }
+        .productbox {
+            background-color: #ffffff;
+            padding: 10px;
+            margin-bottom: 10px;
+            float:left
+        }
+        .productbox:before, .productbox:after
+        {
+            z-index: -1;
+            position: absolute;
+            content: "";
+            bottom: 15px;
+            left: 10px;
+            width: 50%;
+            top: 80%;
+            max-width:300px;
+            background: #777;
+            -webkit-box-shadow: 0 15px 10px #777;
+            -moz-box-shadow: 0 15px 10px #777;
+            box-shadow: 0 15px 10px #777;
+            -webkit-transform: rotate(-3deg);
+            -moz-transform: rotate(-3deg);
+            -o-transform: rotate(-3deg);
+            -ms-transform: rotate(-3deg);
+            transform: rotate(-3deg);
+        }
+        .productbox:after
+        {
+            -webkit-transform: rotate(3deg);
+            -moz-transform: rotate(3deg);
+            -o-transform: rotate(3deg);
+            -ms-transform: rotate(3deg);
+            transform: rotate(3deg);
+            right: 10px;
+            left: auto;
+        }
+        .productboxmain {
+            background-color: #ffffff;
+            padding: 10px;
+            margin-bottom: 0px;
+            -webkit-box-shadow: 0 8px 6px -6px #999;
+            -moz-box-shadow: 0 8px 6px -6px #999;
+            box-shadow: 0 8px 6px -6px #999;
+        }
+        .productboxthumb {
+            background-color: #ffffff;
+            padding: 10px 0 0 0;
+            margin-bottom: 0px;
+            margin-right: 10px;
+            -webkit-box-shadow: 0 8px 6px -6px #999;
+            -moz-box-shadow: 0 8px 6px -6px #999;
+            box-shadow: 0 8px 6px -6px #999;
+        }
+        .producttitle {
+            font-weight: bold;
+            padding: 5px 0 5px 0;
+        }
+        .productprice {
+            border-top: 1px solid #dadada;
+            padding-top: 5px;
+        }
+        .pricetext {
+            font-weight: bold;
+            font-size: 1.4em;
+        }
+    </style>
+
+
+    <script type="text/javascript">
+        function animationHover(element, animation) {
+            element = $(element);
+            element.hover(
+                function () {
+                    element.addClass('animated ' + animation);
+                },
+                function () {
+                    //wait for animation to finish before removing classes
+                    window.setTimeout(function () {
+                        element.removeClass('animated ' + animation);
+                    }, 2000);
+                });
+        }
+
+        $(document).ready(function () {
+           
+            $('.logo').each(function () {
+                animationHover(this, 'bounce');
+            });
+        });
+
+        $(document).delegate('*[data-toggle="lightbox"]', 'click', function (event) {
+            event.preventDefault();
+            $(this).ekkoLightbox();
+        });
+
+        $(document).ready(function () {
+            $("[rel='tooltip']").tooltip();
+
+            $('.productbox').hover(
+                function () {
+
+                 
+                    $(this).find('.caption').slideDown(250); //.fadeIn(250)
+                },
+                function () {
+                  
+                    $(this).find('.caption').slideUp(250); //.fadeOut(205)
+                }
+            );
+        });
+    </script>
+
+
+
+}
+<div class="col-sm-12 padding-left">
+    <!--features_items-->
+    <div class="features_items">
+        <!--product_groups-->
+@*        @Html.Partial("_ProductGroupsList")*@
+        <!--/product_groups-->
+    </div>
+    <div class="category-tab">
+        <!--category-tab-->
+        <div class="col-sm-12">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#Latest" data-toggle="tab">Newest</a></li>
+               
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane  active in" id="Latest">
+                @Html.Partial("_LatestProductsPartial")
+            </div>
+            
+            @*<div class="tab-pane " id="discount">
+                @Html.Partial("_DiscountProductsPartial")
+            </div>*@
+        </div>
+    </div>
+
+</div>
+
+
+
+

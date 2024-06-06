@@ -1,0 +1,73 @@
+﻿@using MLM_app.Helpers
+@model IEnumerable<MLM_app.Models.Slider>
+
+@{
+    ViewBag.Title = "Slider";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<h2 class="title text-center">List of products</h2>
+<section id="cart_items">
+    <div class="container">
+        @Html.ActionLink("Submit slider", "Create", null, new { @class = "btn btn-primary" })
+        <p></p>
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr class="cart_menu text-center">
+                        <td>
+                            @Html.DisplayNameFor(model => model.ImageUrl)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.Link)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.Order)
+                        </td>
+
+                        <td>Operation</td>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="5">No information available for display.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @if (!String.IsNullOrEmpty(@item.ImageUrl))
+                                    {
+                                        <img width="70" height="70" src="@Url.Content(@item.ImageUrl)" />
+                                    }
+                                </td>
+                                <td>
+                                    @Html.Raw(Html.Truncate(item.Title, 20))
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Link)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Order)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.SliderId }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.SliderId }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.SliderId })
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

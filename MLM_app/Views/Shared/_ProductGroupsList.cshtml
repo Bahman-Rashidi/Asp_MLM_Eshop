@@ -1,0 +1,30 @@
+﻿
+@using MLM_app.Models
+
+@{
+    var db = new ApplicationDbContext();
+}
+
+<h2 class="title text-center">Groups</h2>
+@foreach (var item in db.ProductGroups.Where(x => x.ParentId == null))
+{
+    <div class="col-sm-4">
+        <div class="product-image-wrapper">
+            <div class="single-products">
+                <div class="productinfo text-center">
+                    <img src="@Url.Content(item.ImageUrl)" alt="@item.ProductGroupTitle" />
+                    <h2></h2>
+                    <p>@item.ProductGroupTitle</p>
+                </div>
+                <div class="product-overlay">
+                    <div class="overlay-content">
+                        <a href="@Url.Action("ShowByGroup", "AdminProductGroups", new { id = item.ProductGroupID }, null)"><i class="fa fa-search"></i></a>
+                        <h2></h2>
+                        <p>View product list</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}

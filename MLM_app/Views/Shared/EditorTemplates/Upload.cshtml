@@ -1,0 +1,13 @@
+﻿@model string
+
+@Html.HiddenFor(model => model, new { id = "imgEdit" })
+@*<span class="btn btn-info btn-sm btn-file">*@
+    <span class="btn btn-info ">
+        <i class="glyphicon glyphicon-upload"></i>new Image
+        <input type="file" name="ImageUrl" id="ImageUrl">
+
+
+    </span>
+
+    <i class="glyphicon glyphicon-bookmark"></i>previous Image
+    <img src='@Model' style="width: 100px;height: 100px;" />

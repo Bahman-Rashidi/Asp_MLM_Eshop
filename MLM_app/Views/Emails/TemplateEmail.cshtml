@@ -1,0 +1,35 @@
+﻿
+Content-Type: text/html; charset=utf-8
+@{ Layout = null; }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>test title</title>
+</head>
+<body>
+    To: @ViewBag.To
+    From:  info@test.com
+    Subject: test subject
+
+    <div style="background: rgba(243, 215, 82, 0.50);padding: 25px;">
+
+        <div style="font-family: Tahoma;text-align: right;direction: rtl;font-size: 90%;color: #808080;line-height: 2.5em;">
+            @Html.EmbedImage("~/images/logo.jpg")
+            <div style="font-weight: bold">
+                @ViewBag.body
+            </div>
+            <br />
+            @if (!String.IsNullOrEmpty(ViewBag.link))
+            {
+                <div style="text-align: center;font-weight: bold;text-decoration:none">
+                    <a href="@ViewBag.link">Please  click here</a>
+                </div>
+            }
+        </div>
+    </div>
+
+</body>
+</html>
+
+

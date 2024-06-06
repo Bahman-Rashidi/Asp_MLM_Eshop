@@ -1,0 +1,149 @@
+﻿@model MLM_app.Models.ApplicationUser
+@{
+    ViewBag.Title ="User Profile";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+
+@if (@Model.IsCommingFromShopingCart==true)
+{
+
+<div class="row">
+    
+    <div style="color: rgb(243, 98, 209); font-family: tahoma;font-size: 19px;padding-top: 18px;padding-bottom: 18px;">
+        
+    <span>
+        
+Complete your information and return to the purchase process
+    </span>
+    </div>
+
+
+
+    <div class="row">
+        
+            <div class="col-sm-12 col-sm-offset-1">
+            
+                <fieldset>
+
+  <div class="row mb-3">
+                           
+                            <div class="col-md-5">
+                            <a href=@Url.Action("Orders", "ShoppingCart")>
+                                    <div class="cinfo2" id="cartinfo" title="">
+                                         Continue the purchase process
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                </fieldset>
+            </div>
+
+
+    </div>
+
+</div>
+
+}
+
+
+<section id="form">
+    <h2 class="title text-center" style="margin-top: 50px">@ViewBag.Title</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-sm-offset-1">
+                @Html.ValidationSummary(false)
+                <fieldset>
+                    <div class="row mb-3">
+                        <label>User Name</label>
+                        <p class="form-control-static">@Model.UserName</p>
+                    </div>
+                    @using (Html.BeginForm("Profile", "UserManage", FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(x => x.Id)
+                        @Html.HiddenFor(x => x.UserName)
+                        @Html.HiddenFor(x => x.Email)
+                        @Html.HiddenFor(x => x.DateOfRegistration)
+
+                       @Html.HiddenFor(x => x.IsCommingFromShopingCart)
+
+
+                        <div class="row mb-3">
+                            @Html.LabelFor(model => model.EnglishName, new { @class = "control-label col-md-2" })
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.EnglishName)
+                                @Html.ValidationMessageFor(model => model.EnglishName)
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            @Html.LabelFor(model => model.EnglishName, new { @class = "control-label col-md-2" })
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.EnglishName)
+                                @Html.ValidationMessageFor(model => model.EnglishName)
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            @Html.LabelFor(model => model.DateOfBirth, new { @class = "control-label col-md-2" })
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.DateOfBirth)
+                                @Html.ValidationMessageFor(model => model.DateOfBirth)
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            @Html.LabelFor(model => model.NationalCode, new { @class = "control-label col-md-2" })
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.NationalCode)
+                                @Html.ValidationMessageFor(model => model.NationalCode)
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            @Html.Label("Phone number", new { @class = "control-label col-md-2" })
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.PhoneNumber)
+                                @Html.ValidationMessageFor(model => model.PhoneNumber)
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            @Html.LabelFor(model => model.kartNumber, new { @class = "control-label col-md-2" })
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.kartNumber)
+                                @Html.ValidationMessageFor(model => model.kartNumber)
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-2" })
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Address)
+                                @Html.ValidationMessageFor(model => model.Address)
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            @Html.LabelFor(model => model.ZipCode, new { @class = "control-label col-md-2" })
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.ZipCode)
+                                @Html.ValidationMessageFor(model => model.ZipCode)
+                            </div>
+                        </div>
+
+                        <div id="buttons">
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="submit" class="btn btn-primary" value="Submit" />
+                                @Html.ActionLink("Home page", "Index", "Home")
+                            </div>
+                        </div>
+                    }
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</section>
+

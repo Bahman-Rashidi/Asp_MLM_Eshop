@@ -1,0 +1,94 @@
+﻿@model MLM_app.Models.ApplicationUser
+@{
+    ViewBag.Title = "Manage";
+  Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+
+
+
+<div>
+  
+    <hr />
+    <dl >
+        
+        <div style="font-family: Tahoma;font-size: 18px">
+            
+            <table class="table table-bordered">
+                <tr><td >period start date :</td><td><span id="satrtdate" ></span></td></tr>
+                <tr><td>period end  date :</td><td><span id="enddate" ></span></td></tr>
+            </table>
+            
+
+        </div>
+     
+        <dd>
+            <h1>Last purchase  : @Model.LatestDateOfPurchase</h1>
+        </dd>
+        <dd>
+            <h1>Net Profit  : @Model.Dividend</h1>
+        </dd>
+
+        <dd>
+            <h1>period Profit  : @Model.PeriodicalDividend</h1>
+
+
+        </dd>
+
+        <dd>
+            
+            @if (@Model.AllowGetPeriodicalDividend==false)
+            {
+                <h1 style="color:red">You will not receive periodic dividends... Complete your purchase to receive periodic dividends</h1>
+            } 
+            else
+            {
+                <h1 style="color:blue">Periodic dividends will accrue to you and be deposited into your account at the end of the period.</h1>
+  
+            }
+         
+
+
+        </dd>
+  
+    </dl>
+</div>
+
+
+
+
+
+@section scripts
+{
+
+
+    <script>
+
+
+        $(document).ready(function() {
+
+
+            var urla = '@Url.Action( "getCurentPerod","Kartable")';
+       
+            debugger;
+            $.ajax({
+                type: "GET",
+                //  url: 'AdminReport/GetRefinaryReport',
+                url: urla,
+
+                //data: RefinaryViewModel,
+                dataType: "json",
+                success: function (resulta) {
+
+                    $("#satrtdate").html(resulta.StartDate);
+                    $("#enddate").html(resulta.EndDate);
+                }
+            });
+
+
+        });
+
+
+    </script>
+
+}

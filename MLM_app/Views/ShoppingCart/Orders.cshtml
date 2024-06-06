@@ -1,0 +1,307 @@
+﻿@model IEnumerable<MLM_app.ViewModels.OrdersViewModel>
+@{
+    ViewBag.Title = "Invoice list" ;
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+
+
+            var urla = '@Url.Action("Profile", "ShoppingCart")';
+
+            debugger;
+            $.ajax({
+                type: "GET",
+                //  url: 'AdminReport/GetRefinaryReport',
+                url: urla,
+
+                //data: RefinaryViewModel,
+                dataType: "json",
+                success: function(resulta) {
+
+                    $("#contractInfo").css("display", "block");
+
+                    $('#addresss').html(resulta.Address);
+
+                    $('#mobileNumber').html(resulta.PhoneNumber);
+                    $('#email').html(resulta.Email);
+
+                    $('#CodePosti').html(resulta.ZipCode);
+
+                }
+            });
+
+
+        });
+
+
+    </script>
+
+
+    <style>
+
+        @@keyframes blinker {
+            50% { opacity: 0.0; }
+        }
+        #OrderTbale tr:first-child td {
+            vertical-align: top;
+
+            background-color: gold;
+
+
+        }
+        .Mytd
+        { animation: blinker 1s linear infinite;}
+    </style>
+}
+
+<div class="row">
+    
+    <div style="color: rgb(243, 98, 209); font-family: tahoma;font-size: 19px;padding-top: 18px;padding-bottom: 18px;">
+        
+        <span>
+        
+            Your invoice list
+
+        </span>
+    </div>
+
+
+
+    <div class="row">
+        
+
+
+        <div id="dk-cart-prograsbar">
+            <div id="ctl10_Progressbar_pnlSteps">
+	
+                <div class="steps">
+                    <div class="rounded_rectangle">
+
+                        <div class="dashed clearfix">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+
+                        <div class="rounded_rectangle_over step_user"></div>
+                        <span class="bullet login green tick" id="ctl10_Progressbar_lblBullet_1">
+                            <a data-url="/Cart" class="s_title " id="ctl10_Progressbar_lblTitle_1" href="#"><span>Enter the store</span><br/><span>Step one</span></a>
+
+
+                        </span>
+                        <span class="bullet or green" id="ctl10_Progressbar_lblBullet_2">
+                          
+                            <a data-url="/Shipping" class="s_title last green" id="ctl10_Progressbar_lblTitle_2"><span>Send Order Information</span><br/><span>Step two</span></a>
+                         
+                        </span>
+                        <span class="bullet pi" id="ctl10_Progressbar_lblBullet_3">
+                            <span class="spacer first"></span>
+                            <a data-url="/Review" class="s_title" id="ctl10_Progressbar_lblTitle_3">Method of receipt</a>
+                            <span class="spacer second"></span>
+                        </span>
+                       
+
+                        <div class="dashed gray clearfix">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div>
+    
+
+
+
+</div>
+
+<div id="contractInfo" style="display: none">
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-sm-offset-1">
+            
+                <fieldset>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Postal code :</label>
+</div>
+                        <div class="col-md-6" >
+                         <label id="CodePosti"></label>
+                                
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-2">
+                                           <label>Phone number :</label>
+         
+                        </div>
+                        <div class="col-md-6">
+                            <label id="mobileNumber"></label>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label >Email :</label>
+ </div>
+                        <div class="col-md-6">
+                            <label id="email"></label>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                           <div class="col-md-2">
+                               <label>Address :</label>
+ </div>
+                        <div class="col-md-6">
+                            <label id="addresss"></label>
+                        </div>
+                    </div>
+  <div class="form-group">
+                           
+                            <div class="col-md-5">
+                            <a href=@Url.Action("Profile", "UserManage")>
+                                <div class="cinfo2" id="cartinfo" title="">
+                                    Complete your information
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+<h2 class="title text-center" style="margin-top: 50px">invoices of &nbsp; @User.Identity.Name</h2>
+<section id="cart_items">
+    <div class="container">
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed" >
+                <thead>
+                    <tr class="cart_menu text-center">
+                        <td>Invoice number</td>
+                        <td>Invoice Date</td>
+                        <td>Payment status</td>
+                        <td>Method of delivery</td>
+                        <td>Call charges</td>
+                        <td>Shipping cost</td>
+                        <td>Packing cost</td>
+                        <td>Total invoice amount</td>
+                        <td>Payable</td>
+                        <td class="Mytd">Continue Purchase Process</td>
+                        <td>Delete Invoice</td>
+                        <td>Payment</td>
+                    </tr>
+                </thead>
+                <tbody class="text-center" id="OrderTbale">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.OrderID</td>
+                            <td>@item.OrderDate</td>
+                            <td>
+                                @if (item.IsFinalized)
+                                {
+                                    @:Settled
+                                }
+                                else
+                                {
+                                    @:Unsettled
+                                }
+                            </td>
+<td>@item.ReciptionMethod</td>
+                            <td>@item.ContactPrice.ToString("#,0 $")</td>
+                            <td>
+                                  @if (!item.IsFinalized && item.ReciptionMethod != "")
+                                  {
+                                      @item.Price.ToString("#,0 $");
+                                  }
+                                  else
+                                  {
+   <span>Unknown</span>
+                                  }
+
+                            </td>
+
+                            <td>@item.packingPrice.ToString("#,0 $")</td>
+                            <td>@item.OrderTotal.ToString("#,0 $")</td>
+                            <td>
+                                 @if (!item.IsFinalized && item.ReciptionMethod != "Unknown")
+                                  {
+                                      @item.OrderTotalWithReception.ToString("#,0 $")
+                                  }
+  @if (item.IsFinalized )
+  {
+<span>@item.ReciptionMethod</span>
+  }
+  else
+  {
+                            <span>Please specify the method of receipt</span>
+  }
+                               
+                            </td>
+
+
+                            <td>
+                                @if (item.IsFinalized == false && item.ReciptionMethod != "Unknown")
+                                {
+                                    @Html.ActionLink("Online Payment", "BankPayPayment", "Payment", new { id = @item.OrderID }, new { @class = "btn btn-success xs Mytd" })
+                                }
+                                @if (item.IsFinalized == true)
+                                {
+                                    <span>Paid</span>
+
+                                }
+                                else
+                                {
+
+                                    @Html.ActionLink("Specify how to receive", "ReciptionMethod", "ShoppingCart", new { id = @item.OrderID }, new { @class = "btn btn-success xs" })
+
+                                }
+
+                            </td>
+                            <td>
+                                     @Html.ActionLink("Invoice Details", "details","ShoppingCart", new { id = @item.OrderID }, new { @class = "btn btn-success xs" })
+
+                            </td>
+                            <td>
+                                    @Html.ActionLink("Delete Invoice", "deletea","ShoppingCart", new { id = @item.OrderID }, new { @class = "btn btn-success xs" })
+
+                            </td>
+
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

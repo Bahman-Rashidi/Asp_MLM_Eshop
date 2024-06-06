@@ -1,0 +1,66 @@
+﻿@model IEnumerable<MLM_app.Models.Comment>
+
+<div class="response-area">
+    <h2>Number of comments : @ViewBag.count</h2>
+    @DisplayComment(Model.Where(x => x.ParentId == null))
+
+    @* In this way, we display comments along with their responses *@
+    @helper DisplayComment(IEnumerable<MLM_app.Models.Comment> comments)
+    {
+        <ul class="media-list">
+            @foreach (var comment in comments)
+            {
+                <li class="media">
+
+                    @*<a class="pull-right" href="#">
+                            <img class="media-object" src="@Url.Content("~/images/usericon.jpg")" alt="@comment.Author">
+                        </a>*@
+                    <div class="media-body">
+                        <ul class="sinlge-post-meta" style="display: inline-block; margin-left: -90px; ">
+
+                            <li><i class="fa fa-clock-o"></i> @comment.CommentDate.ToShortTimeString()</li>
+                            <li><i class="fa fa-calendar"></i>@comment.CommentDate.ToString("yyyy/MM/dd")</li>
+                            <li><i class="fa fa-user"></i>@comment.Author</li>
+                        </ul>
+                        <p>@Html.Raw(comment.CommentContent)</p>
+                        <a href="#" id="btnReply_@comment.CommentId">RESPONSE</a>
+
+                    </div>
+                </li>
+                var childComment = Model.Where(x => x.ParentId == comment.CommentId).ToList();
+                if (childComment.Count > 0)
+                {
+
+                    <li class="second-media">
+                        @DisplayComment(childComment)
+                    </li>
+                }
+            }
+        </ul>
+    }
+
+</div>
+    
+    
+    <!--/Response-area-->
+@*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+<script type="text/javascript">
+
+
+
+    $(document).ready(function () {
+        $("[id*=btnReply]").each(function () {
+            $(this).click(function () {
+
+                var commentid = $(this).attr("id").match(/[\d]+$/);
+                $("#ParentId").val(commentid);
+
+                $('html,body').animate({
+                    scrollTop: $("#insertCommentForm").offset().top - ($(window).height() / 8)
+                }, 500
+                );
+            });
+        });
+    });
+</script>
+

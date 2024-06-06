@@ -1,0 +1,64 @@
+﻿@model MLM_app.Models.ProductGroup
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutMLM.cshtml";
+}
+
+<h2 class="title text-center">Product Group Delete</h2>
+
+<h3>Are you sure you want to delete the product group?</h3>
+<div>
+    <dl class="dl-horizontal">
+
+        @if (Model.ParentId != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Parent.ProductGroupTitle)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Parent.ProductGroupTitle)
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductGroupTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductGroupTitle)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameInSystem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+
+        <dd>
+            @if (!String.IsNullOrEmpty(@Model.ImageUrl))
+            {
+                <img width="50" height="50" alt="" src="@Url.Content(@Model.ImageUrl)" />
+            }
+
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div id="buttons">
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-10">
+                <input type="submit" class="btn btn-primary" value="Delete" />
+                @Html.ActionLink("Back to the menu", "Index")
+            </div>
+        </div>
+    }
+</div>

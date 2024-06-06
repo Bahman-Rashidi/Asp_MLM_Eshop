@@ -1,0 +1,45 @@
+﻿@using MLM_app.Helpers
+@using MLM_app.Models
+
+@{
+    var db = new ApplicationDbContext();
+}
+
+@foreach (var item in db.Products.OrderByDescending(p => p.Off).Take(3))
+{
+    <div class="col-sm-3 column productbox">
+        <div class="product-image-wrapper">
+            <div class="single-products">
+                <div class="productinfo text-center">
+                    
+                    <div class="caption" style="display: none; overflow: hidden; height: 313px; padding-top: 28.25px; margin-top: 0px; padding-bottom: 28.25px; margin-bottom: 0px;">
+                        <h4>@item.ProductTitle</h4>
+                        <h2>@Html.OffProduct(item.Off, item.ProductPrice)</h2>
+                        <a id="btnAddToBasket_@item.ProductID" href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
+                        <h5>@item.LicenseNumber</h5>
+                        @*<h5>@item.AvailableNumber</h5>*@
+
+                        @*  <p class="captionprice">@Html.OffProduct(item.Off, item.ProductPrice)</p>*@
+                        <p>
+                            <a class="label label-danger" href="/product/@item.ProductID/@item.ProductTitle">Product Details</a>
+
+                        </p>
+                    </div>
+
+
+
+
+                    <img  class="logo" src="@Url.Content(item.ProductThumbnailImageUrl)" alt="@item.ProductTitle" />
+@*                    <h2>@Html.OffProduct(item.Off, item.ProductPrice)</h2>
+                    <p>@item.ProductTitle</p>
+                    <a id="btnAddToBasket_@item.ProductID" href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
+                    <p>@item.LicenseNumber</p>
+                    <br />
+                    <a href="/product/@item.ProductID/@item.ProductTitle"><i class="fa fa-list"></i>Product Details</a>*@
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+}
