@@ -6,6 +6,8 @@ Each user must make at least one purchase in each period to receive a profit.
 
 The administrator has the capability to define periods in the system.
 
+Slider +  News  + Coments + Managments Panel 
+
 technologies : Ap.net 4.5 . Entity framework code first , bootstrap 5 , jquery , LINQ
 
 
